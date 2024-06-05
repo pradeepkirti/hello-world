@@ -1,0 +1,201 @@
+how to write this expression in cognos analytics in quary calculation expression box.  
+
+
+1--CASE WHEN 
+  [Month End Date TN] > [Udf_L2L12M End Month End Date]  -- Filter condition
+THEN
+  ToDate(STRTOMONYYYY('[Month Year TN]', '%b %Y'), 'YYYY-MM-DD')  -- Convert to date and format
+ELSE
+  NULL  -- No formatting if filter fails
+END
+
+
+2-LASTDAY(ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+
+3-LASTDAY(
+  DATEADD('months', -11, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+)
+
+4- LASTDAY(
+  DATEADD('months', -12, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+)
+
+LASTDAY(
+  RelativeDate(ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'), -12, 'M')
+)
+
+
+5-LASTDAY(
+  DATEADD(
+    'months', -MOD(-23, 12),  -- Calculate months using modulo
+    RelativeDate(ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'), -TRUNC(-23 / 12, 0), 'Y')  -- Calculate years using integer division (if RelativeDate supports years)
+  )
+)
+
+
+
+
+CASE WHEN ABS(-23) <= 12 THEN  -- Movement within 1 year
+  LASTDAY(
+    DATEADD('months', -23, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+  )
+WHEN ABS(-23) > 12 THEN  -- Movement beyond 1 year (example calculation, adjust logic as needed)
+  LASTDAY(
+    DATEADD('months', -MOD(-23, 12),  -- Calculate months within the year
+      DATEADD('years', -TRUNC(-23 / 12, 0) - 1, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))  -- Move to the year before target year
+  )
+END
+
+
+6-LASTDAY(
+  ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD')
+)
+
+
+7-DATEADD('days', 1, 
+  DATEADD('months', -12, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+)
+
+
+
+DATEADD('days', 1, 
+  LASTDAY(
+    DATEADD('months', -12, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+  )
+)
+
+
+
+
+
+
+8-LASTDAY(
+  RelativeDate(ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'), -12, 'M')
+)
+
+
+LASTDAY(
+  DATEADD('months', -12, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+)
+
+9-DATEADD('days', 1, 
+  DATEADD('months', -24, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+)
+
+
+DATEADD('days', 1, 
+  LASTDAY(
+    DATEADD('months', -24, ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'))
+  )
+)
+
+
+10-(
+  [TransferNow Activity].[TN Transfer Count] + 
+  [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+)
+WHERE 
+  Month(ToDate([Month Year TN], '%b-%y')) = Month(CURRENT_DATE)  -- Assuming Month Year TN contains year
+
+
+
+
+(
+  [TransferNow Activity].[TN Transfer Count] + 
+  [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+)
+WHERE 
+  ToChar(ToDate([Month Year TN], '%b-%y'), 'YYYY-MM') = ToChar(CURRENT_DATE, 'YYYY-MM')  -- Assuming 'MM-yy' format for Udf_This Month
+
+
+
+11---------
+
+12 =dateFormat(
+  relativeDate(
+    toDate(userprompt("Select Reporting Month Begin Date"),"%Y-%m-%d"),
+    -1,
+    "Month"
+  ),
+  "MMM-yy"
+)
+
+
+13- =dateFormat(
+  toDate(userprompt("Select Reporting Month Begin Date"), "%Y-%m-%d"),
+  "MMM yyyy"
+)
+
+14-=dateFormat(toDate(userprompt("Select Reporting Month Begin Date"),"%Y-%m-%d"),"MMM-yy")
+
+15=dateFormat(
+  relativeDate(
+    toDate(userprompt("Select Reporting Month Begin Date"),"%Y-%m-%d"),
+    -2,
+    "Year"
+  ),
+  "MMM-yy"
+)
+
+
+=FormatDate(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-24;MonthPeriod);"Mmm-yy")
+
+
+16-=dateFormat(
+  relativeDate(
+    toDate(userprompt("Select Reporting Month Begin Date"),"%Y-%m-%d"),
+    -1,  -- Changed from -12 to -1 for years
+    "Year"
+  ),
+  "MMM-yy"
+)
+
+17 ="%" & [Transfer Speed]
+
+18 sum(
+  case when [TN] is null then 0  -- Handles potential null values in TN
+       when [TN].[Level].name = 'BOFA' then 0  -- Excludes BOFA transactions
+       else [Measures].[TN Transacted FI Count] end
+)
+
+19 sum(
+  case when [FI Classification] = 'Large FIs' then
+       case when [FI Classification].[Level].name = 'Other' then 
+           [Measures].[Measure Name] 
+       when [FI Classification].[Level].name = 'BOFA' then 
+           [Measures].[Measure Name] 
+       else 0  -- Handles potential unmatched Large FIs levels
+       end
+  else 0  -- Handles FIs not classified as Large FIs
+  end
+)
+
+20-sum(
+  case when [TN].[Home ID] = 88871070 then  -- Filter by Home ID
+       [Measures].[TN Transacted FI Count - BOFA]
+  else 0  -- Exclude TNs with different Home IDs
+  end
+)
+
+
+21 sum(
+  case when 
+       [TN].[Home ID] inlist (88871070, 88850042, 88850003, 88871081, 88850009, 88871020, 88850031, 88850059, 88850065, 88851001)  -- Filter by Home ID list
+  or [TN].[Partner] = 'Digital Insight'  -- Filter by Partner value
+  then [Measures].[TN Transacted FI Count]  -- Include TNs meeting criteria
+  else 0  -- Exclude TNs not meeting criteria
+  end
+)
+
+
+22-sum(
+  [Measures].[TN Transacted FI Count]  -- Include all TNs' FI count
+  + case when [FI Classification] = 'Large FIs' then 0 else [Measures].[TN Transacted FI Count - BOFA] end  -- Exclude Large FIs FI count (BOFA handled separately)
+) - sum([Measures].[Large FIs])  -- Subtract Large FIs total count (assuming a measure)
+
+
+
+sum(
+  [Measures].[TN Transacted FI Count]
+  + [Measures].[TN Transacted FI Count - BOFA]
+) - sum([Measures].[Large FIs])
