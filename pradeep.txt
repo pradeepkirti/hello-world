@@ -216,3 +216,7 @@ Udf_NetFundFlow_L2L12M
 Udf_TN Avg Transfer per User
 
 =If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])/([TransferNow Activity].[TN Transacted User Count] + [TransferNow Activity - BOFA].[TN Transacted User Count - BOFA])) = 1) Then 0 Else ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])/([TransferNow Activity].[TN Transacted User Count] + [TransferNow Activity - BOFA].[TN Transacted User Count - BOFA])
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))=1) Then 0
+ElseIf(IsNull([Udf_Avg Transfer/User TMLY]) = 1) Then 0 Else (([Udf_Avg Transfer/User TM]-[Udf_Avg Transfer/User TMLY])/[Udf_Avg Transfer/User TMLY])
