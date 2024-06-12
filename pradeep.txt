@@ -220,3 +220,10 @@ Udf_TN Avg Transfer per User
 
 =If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))=1) Then 0
 ElseIf(IsNull([Udf_Avg Transfer/User TMLY]) = 1) Then 0 Else (([Udf_Avg Transfer/User TM]-[Udf_Avg Transfer/User TMLY])/[Udf_Avg Transfer/User TMLY])
+
+CASE
+  WHEN (IsNull([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) 
+        WHERE (FormatDate([Month Year TN]; "Mmm-yy") = [Udf_This Month Last Year])) = 1 THEN 0
+  WHEN (IsNull([Udf_Avg Transfer/User TMLY]) = 1) THEN 0
+  ELSE (([Udf_Avg Transfer/User TM] - [Udf_Avg Transfer/User TMLY]) / [Udf_Avg Transfer/User TMLY])
+END
