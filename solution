@@ -1,0 +1,7 @@
+total (
+    case 
+        when ([Transfer Direction] = 'Inbound' and cast(extract(month, [Month Year TN]) as varchar(2)) || '-' || cast(extract(year, [Month Year TN]) as varchar(4)) = [Udf_This Month]) 
+        then [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA] 
+        else 0 
+    end
+)
