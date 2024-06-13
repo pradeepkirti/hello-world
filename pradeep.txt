@@ -239,3 +239,11 @@ total(([TransferNow Activity].[TN Transfer Count]) for ([Transfer Direction] = '
 total(([TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) for ([Transfer Direction] = 'Inbound' AND [Month Year TN] = ?[Udf_This Month]?))
 
 =([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))
+
+
+
+total(([TransferNow Activity].[TN Transfer Count] for ([Transfer Direction] = 'Inbound' AND [Date TN] between ?[Udf_Last 12 Months Start Date]? and ?[Udf_Last 12 Months End Date]?))) +
+total(([TransferNow Activity - BOFA].[TN Transfer Count - BOFA] for ([Transfer Direction] = 'Inbound' AND [Date TN] between ?[Udf_Last 12 Months Start Date]? and ?[Udf_Last 12 Months End Date]?)))
+
+total(([TransferNow Activity].[TN Transfer Count] for ([Transfer Direction] = 'Inbound' AND [Date TN] between ?[Udf_Last 12 Months Start Date]? and ?[Udf_Last 12 Months End Date]?)), [TransferNow Activity - BOFA].[TN Transfer Count - BOFA] for ([Transfer Direction] = 'Inbound' AND [Date TN] between ?[Udf_Last 12 Months Start Date]? and ?[Udf_Last 12 Months End Date]?))
+
