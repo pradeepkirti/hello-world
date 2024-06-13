@@ -227,3 +227,7 @@ CASE
   WHEN (IsNull([Udf_Avg Transfer/User TMLY]) = 1) THEN 0
   ELSE (([Udf_Avg Transfer/User TM] - [Udf_Avg Transfer/User TMLY]) / [Udf_Avg Transfer/User TMLY])
 END
+
+
+	=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+	Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
