@@ -131,3 +131,31 @@ CASE
   WHEN [Udf_Large Clients TMLY] = 0 THEN 0
   ELSE ([Udf_Large Clients TM] - [Udf_Large Clients TMLY]) / [Udf_Large Clients TMLY]
 END
+
+
+
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE")))
+
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))) In ([Home ID]))
+
+
+
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE")))
+
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))) In ([Home ID]))
+
+
+
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])) And ([Mobile TransferNow Activity] = "MOBILE")))
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))) In ([Home ID]))
+
+
+
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])) And ([Mobile TransferNow Activity] = "MOBILE")))
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) In ([Home ID]))
