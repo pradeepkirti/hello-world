@@ -89,3 +89,5 @@ CASE
   ELSE 
     NULL
 END
+
+=UserResponse("Select Dormant Period:") + " days, as of " + FormatDate(RelativeDate(CurrentDate();-1); "Mmmm d, yyyy")
