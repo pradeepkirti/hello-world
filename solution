@@ -57,3 +57,11 @@ Else "Yes"
    ElseIf IsNull([Last KTP Send Money Date]) Then [Last Send Money Date (Non-KTP)]
    ElseIf [Last KTP Send Money Date] < [Last Send Money Date (Non-KTP)] Then [Last Send Money Date (Non-KTP)]
    Else [Last KTP Send Money Date]
+
+
+CASE 
+  WHEN [Last Send Money Date (Non-KTP)] IS NULL THEN [Last KTP Send Money Date]
+  WHEN [Last KTP Send Money Date] IS NULL THEN [Last Send Money Date (Non-KTP)]
+  WHEN [Last KTP Send Money Date] < [Last Send Money Date (Non-KTP)] THEN [Last Send Money Date (Non-KTP)]
+  ELSE [Last KTP Send Money Date]
+END
