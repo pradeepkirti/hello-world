@@ -50,3 +50,10 @@ Else "Yes"
 =[ReportFilter-HasSentMoneyKTP]
 
 =Replace(ReportFilter([Has Sent Money (KTP)]);";";", "+Char(13)+Char(10))
+
+
+
+=If IsNull([Last Send Money Date (Non-KTP)]) Then [Last KTP Send Money Date]
+   ElseIf IsNull([Last KTP Send Money Date]) Then [Last Send Money Date (Non-KTP)]
+   ElseIf [Last KTP Send Money Date] < [Last Send Money Date (Non-KTP)] Then [Last Send Money Date (Non-KTP)]
+   Else [Last KTP Send Money Date]
