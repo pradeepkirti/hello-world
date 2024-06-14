@@ -107,3 +107,22 @@ replace(ReportFilter('Has Received Money'), ';', ', ' + chr(13) + chr(10))
 
 =LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than") > 0 
 Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); 200); Char(13)) - 1); "Days since last transaction is more than ";"");"Greater than";"")))
+
+
+
+case
+  when position('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')) > 0 then
+    ltrim(rtrim(
+      replace(
+        replace(
+          substring(
+            ReportFilterSummary('Dormant P2P Users'),
+            position('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')),
+            locate(char(13), substring(ReportFilterSummary('Dormant P2P Users'), position('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')))) - 1
+          ),
+          'Days since last transaction is more than ', ''
+        ),
+        'Greater than', ''
+      )
+    ))
+end
