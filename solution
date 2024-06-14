@@ -91,3 +91,6 @@ CASE
 END
 
 =UserResponse("Select Dormant Period:") + " days, as of " + FormatDate(RelativeDate(CurrentDate();-1); "Mmmm d, yyyy")
+
+ParamDisplayValue('Select Dormant Period:') + ' days, as of ' + to_char(current_date - 1 day, 'MMMM D, YYYY')
+
