@@ -1,0 +1,184 @@
+1-Has Received Money
+
+=If IsNull([Last Received Money Date])
+Then "No"
+Else "Yes"
+
+if ([Last Received Money Date] is null)
+then ('No')
+else ('Yes')
+
+2-Has Requested Money
+
+=If IsNull([Last Request-to-Pay Sent Date])
+Then "No"
+Else "Yes"
+
+if ([Last Request-to-Pay Sent Date] is null)
+then ('No')
+else ('Yes')
+
+
+3-Has Sent Money (KTP)
+
+=If IsNull([Last KTP Send Money Date])
+Then "No"
+Else "Yes"
+
+if ([Last KTP Send Money Date] is null)
+then ('No')
+else ('Yes')
+
+4-Has Sent Money (Non KTP)
+
+=If IsNull([Last Send Money Date (Non-KTP)])
+Then "No"
+Else "Yes"
+
+
+if ([Last Send Money Date (Non-KTP)] is null)
+then ('No')
+else ('Yes')
+
+5-Has Transacted
+
+=If IsNull([Last Send Date]) And IsNull([Last Received Money Date]) And IsNull([Last Request-to-Pay Sent Date])
+Then "No"
+Else "Yes"
+
+
+if (([Last Send Date] is null) And ([Last Received Money Date] is null) And ([Last Request-to-Pay Sent Date] is null))
+then ('No')
+else ('Yes')
+
+6-Last Send Date
+
+=If IsNull([Last Send Money Date (Non-KTP)]) Then [Last KTP Send Money Date]
+   ElseIf IsNull([Last KTP Send Money Date]) Then [Last Send Money Date (Non-KTP)]
+   ElseIf [Last KTP Send Money Date] < [Last Send Money Date (Non-KTP)] Then [Last Send Money Date (Non-KTP)]
+   Else [Last KTP Send Money Date]
+
+CASE 
+  WHEN [Last Send Money Date (Non-KTP)] IS NULL THEN [Last KTP Send Money Date]
+  WHEN [Last KTP Send Money Date] IS NULL THEN [Last Send Money Date (Non-KTP)]
+  WHEN [Last KTP Send Money Date] < [Last Send Money Date (Non-KTP)] THEN [Last Send Money Date (Non-KTP)]
+  ELSE [Last KTP Send Money Date]
+END
+
+7-
+
+
+Include Users that registered after
+
+
+=If IsNull([Popmoney Registration Date]) Then [Zelle Registration Date]
+   ElseIf IsNull([Zelle Registration Date]) Then [Popmoney Registration Date]
+   ElseIf [Popmoney Registration Date] > [Zelle Registration Date] Then [Popmoney Registration Date]
+   Else [Zelle Registration Date]
+
+
+CASE 
+  WHEN [Popmoney Registration Date] IS NULL THEN [Zelle Registration Date]
+  WHEN [Zelle Registration Date] IS NULL THEN [Popmoney Registration Date]
+  WHEN [Popmoney Registration Date] < [Zelle Registration Date] THEN [Popmoney Registration Date]
+  ELSE [Zelle Registration Date]
+END
+
+8-Include Users that registered before
+
+=If IsNull([Popmoney Registration Date]) Then [Zelle Registration Date]
+   ElseIf IsNull([Zelle Registration Date]) Then [Popmoney Registration Date]
+   ElseIf [Popmoney Registration Date] > [Zelle Registration Date] Then [Popmoney Registration Date]
+   Else [Zelle Registration Date]
+
+
+CASE 
+  WHEN [Popmoney Registration Date] IS NULL THEN [Zelle Registration Date]
+  WHEN [Zelle Registration Date] IS NULL THEN [Popmoney Registration Date]
+  WHEN [Popmoney Registration Date] < [Zelle Registration Date] THEN [Popmoney Registration Date]
+  ELSE [Zelle Registration Date]
+END
+
+9-InputControl-DaysSinceLastTrans
+
+
+=LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than") > 0 
+Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); 200); Char(13)) - 1); "Days since last transaction is more than ";"");"Greater than";"")))
+
+
+
+
+
+CASE 
+  WHEN POSITION('Days since last transaction is more than' IN ReportFilterSummary('Dormant P2P Users')) > 0 THEN 
+    TRIM(
+      REPLACE(
+        REPLACE(
+          SUBSTRING(
+            ReportFilterSummary('Dormant P2P Users'),
+            POSITION('Days since last transaction is more than' IN ReportFilterSummary('Dormant P2P Users')),
+            POSITION(CHAR(13) IN SUBSTRING(ReportFilterSummary('Dormant P2P Users'), POSITION('Days since last transaction is more than' IN ReportFilterSummary('Dormant P2P Users')))) - 1
+          ),
+          'Days since last transaction is more than ', 
+          ''
+        ),
+        'Greater than', 
+        ''
+      )
+    )
+  ELSE 
+    NULL
+END
+
+
+10-InputControl-IncludeUsersThatRegisteredAfter
+
+=LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after") > 0 Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after"); 200); Char(13)) - 1); "Include Users that registered after";"");"Greater than";"")))
+
+
+11-InputControl-IncludeUsersThatRegisteredBefore
+
+=LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered before") > 0 Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered before"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered before"); 200); Char(13)) - 1); "Include Users that registered before";"");"Less than";"")))
+
+
+12-Prompt-DormantPeriod
+
+13-ReportFilter-DormantPeriod
+
+?P_Dormant? + 'days, as of ' + to_char(current_date,'MMMM d, yyyy')
+
+
+14-ReportFilter-DormantPeriod
+
+?P_Dormant? + ' days, as of ' + to_char(current_date - 1 day, 'MMMM D, YYYY')
+
+
+15-ReportFilter-HasReceivedMoney
+=Replace(ReportFilter([Has Received Money]);";";", "+Char(13)+Char(10))
+
+replace(ReportFilter('Has Received Money'), ';', ', ' || chr(13) || chr(10))
+
+
+16-
+=Replace(ReportFilter([Has Requested Money]);";";", "+Char(13)+Char(10))
+replace ([Has Requested Money], ';', ', ' || chr(13) || chr(10))
+
+
+17-ReportFilter-HasSentMoneyKTP
+
+=Replace(ReportFilter([Has Sent Money (KTP)]);";";", "+Char(13)+Char(10))
+
+replace ([Has Sent Money (KTP)], ';', ', ' || chr(13) || chr(10))
+
+
+18-ReportFilter-HasSentMoneyNonKTP
+=Replace(ReportFilter([Has Sent Money (Non KTP)]);";";", "+Char(13)+Char(10))
+
+replace ([Has Sent Money (Non KTP)], ';', ', ' || chr(13) || chr(10))
+
+
+19-ReportFilter-HasTransacted
+
+=Replace(ReportFilter([Has Transacted]);";";", "+Char(13)+Char(10))
+
+replace ([Has Transacted], ';', ', ' || chr(13) || chr(10))

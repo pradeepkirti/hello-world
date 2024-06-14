@@ -1,0 +1,64 @@
+06/06/2024
+Cognos---team content---payments BI Migration ----CE user transaction metric----Zelle incoming payments
+
+Toady i have fixed bugs and shared to testing team.
+
+
+06/06/2024
+
+I was working on TransferNow Monthly update
+
+[Date] between _add_months(current_date, -24) and current_date   -----Before 24 month filter
+[Month Begin Date] between ?pMonth_Begin_Date? and _add_months (?pMonth_Begin_Date?, -24)
+
+First Page
+Mesures Requirement
+=[Udf_RunDate]-Done
+=[Udf_This Month]- Done
+=[Udf_This Month Last Year]-Done
+=Udf_Last 12 Months End Date-Done
+=Udf_Last 12 Months Start Date-Done
+=Udf_Last to Last Year End Date-Done
+=Udf_Last 12 Months Start Date-Done
+=Udf_Last to Last Year Start Date-Done
+=Udf_Previous Month-Done
+
+All FIs- Done
+Large FIs-Done
+Other FIs--Done
+[Large FIs Other]-Done
+[Large FIs BOFA]- Done
+
+
+Transfer Activity by Client - Top Clients
+
+=[Udf_Large Clients TM]--Done
+=[Udf_Large Clients TMLY]--Done
+=[Udf_Large Clients L12M]--Done
+=[Udf_Large Clients L2L12M]--Done
+
+
+
+Second Page
+Instant Transfer Activity by Client
+=[Udf_Live Instant TM]-Done
+=[Udf_Live Instant TMLY]-Done
+=[Udf_Live Instant L12M]-Done
+=[Udf_Live Instant L2L12M]-Done
+
+pMonth_Begin_Date
+
+First Table
+Transfer volume growth, compared to the previous month-Done
+Transfer volume growth, compared to the previous year-Done
+Dollars transferred this month, compared to the previous month-Done
+Dollars transferred this month, compared to the previous year-Done
+
+Second Table
+
+Incoming transfer volume growth, compared to the previous month-Done
+Outgoing transfer volume growth, compared to the previous month-Done
+Incoming transfer volume growth, compared to the previous year-Done
+Outgoing transfer volume growth, compared to the previous year-Done
+Next Day transfer volume growth, compared to the previous month-Done
+Standard transfer volume growth, compared to the previous month-Done

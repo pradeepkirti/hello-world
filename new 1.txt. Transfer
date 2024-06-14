@@ -1,0 +1,1571 @@
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate(
+[Month Year TN];"Mmm-yy") = [Udf_This Month])) = 1) Then 0 Else ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+ 
+([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+for (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+
+
+Case 
+ when([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is null then 0
+ when([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is not null then
+
+(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) for (To_char([Month Year TN],"Mmm-yy") = [Udf_This Month]))
+	  
+	  
+	  Case 
+ when([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is null then 0
+ else
+
+(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) for (To_char([Month Year TN],"Mmm-yy") = [Udf_This Month]))
+
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+Where  (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) 
+Then 0 Else ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+
+Case
+ When ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is null
+ else
+ (([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) for (To_char([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))
+ 
+Case when ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is null and 
+
+case when FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+then ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+else 
+0 end  - Date Item 1
+case when FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+then ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+else 
+0 end - Date Item2
+
+case when Date Item 1=1
+then 0
+else Date Item2
+end
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))) = 1) Then 0 Else 
+([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+Where ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))
+
+
+
+Case When
+([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))
+then 
+(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+else 0
+end
+ 
+
+([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+for[Udf_Last 12 Months End Date]))
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))) = 1) Then 0 Else 
+([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))
+
+([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+For([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+=RelativeDate(LastDayOfMonth(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-24;MonthPeriod));1;DayPeriod)
+
+_last_of_month ( _add_months (?pMonthBeginDate?, -12))   --Udf_Last 12 Months End Date
+
+_first_of_month ( _add_months (?pMonthBeginDate?, -12))  ---Udf_Last 12 Months Start Date
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+=[Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]
+
+
+Large FIs BOFA
+
+=([Distinct TN - BOFA].[TN Transacted FI Count - BOFA] Where ([Distinct TN - BOFA].[Home ID] = 88871070)
+
+Case 
+  when [TransferNow Activity].[Home ID] = 88871070
+then [TransferNow Activity].[TN Transacted FI Count - BOFA]
+else 0
+end
+
+Large FIs Other
+
+=[Distinct TN].[TN Transacted FI Count]
+Where (( [Distinct TN].[Home ID] InList (88871070; 88850042; 88850003; 88871081; 88850009; 88871020; 88850031; 88850059; 88850065; 88851001)) Or ([Distinct TN].[Partner] = "Digital Insight"))
+
+case 
+   when [TransferNow Activity].[Home ID] in (88871070, 88850042, 88850003, 88871081, 88850009, 88871020, 88850031, 88850059, 88850065, 88851001) or [TransferNow Activity].[Partner] = 'Digital Insight'
+then 
+[TransferNow Activity].[TN Transacted FI Count]
+else 0
+end 
+ 
+ 
+ 
+ Other FIs
+ 
+ =([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA])- [Large FIs]
+ 
+ 
+ 
+ 
+ 
+ Reporting Month Year
+ 
+ 
+ =FormatDate(ToDate([Month Year TN];"Mmm yyyy");"Mmm yyyy") Where ([Month End Date TN] >[Udf_L2L12M End Month End Date])
+ 
+ 
+ 
+ Case 
+   When 
+    [Month End Date TN] >[Udf_L2L12M End Month End Date]
+	then 
+	   (To_char([Month Year TN];"Mmm yyyy");"Mmm yyyy")
+	   else 0
+	   end
+	   
+	   
+	   =If(IsNull(([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) 
+- (([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+/(([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+
+
+
+
+
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate(
+[Month Year TN];"Mmm-yy") = [Udf_This Month])) = 1) Then 0 Else ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+
+
+
+total([TransferNow Activity].[TN Transfer Count], [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+for [Udf_This Month Last Year])
+
+
+
+----------------------------------------------------------------
+Udf_Large Clients L12M
+
+total([TransferNow Activity].[TN Transfer Count], [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+for([Date TN] Between([Udf_Last 12 Months Start Date] and [Udf_Last 12 Months End Date])
+
+
+total([TN Transfer Count] for [Udf_This Month Last Year])+total( [TN Transfer Count - BOFA] for [Udf_This Month Last Year])
+
+
+
+------------------------------
+Udf_Large Clients L2L12M
+
+total([TransferNow Activity].[TN Transfer Count], [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+For([Date TN] Between([Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date]))
+
+
+Udf_L12M Start Month End Date   = =LastDayOfMonth(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-11;MonthPeriod))
+
+
+Udf_Last to Last Year End Date=  =LastDayOfMonth(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-12;MonthPeriod))
+
+Udf_Last to Last Year Start Date= =RelativeDate(LastDayOfMonth(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-24;MonthPeriod));1;DayPeriod)
+
+total([TN Transfer Count] for ([Date] Between [Udf_Last to Last Year Start Date] And [Udf_Last to Last Year End Date]))+total([TN Transfer Count - BOFA] for ([Date] Between [Udf_Last to Last Year Start Date] And [Udf_Last to Last Year End Date]))
+
+
+-----------------------------------------------------------------------
+Udf_Live Instant TM
+
+=If(IsNull([TransferNow Activity].[TN Transfer Count] Where (FormatDate([TransferNow Activity].[Month Year];"Mmm-yy") = [Udf_This Month])) = 1) Then 0 Else [TransferNow Activity].[TN Transfer Count] Where (FormatDate([TransferNow Activity].[Month Year];"Mmm-yy") = [Udf_This Month])
+
+
+([TransferNow Activity].[TN Transfer Count] for [Udf_This Month])
+
+total([TN Transfer Count] for [[Udf_This Month]]])
+
+
+
+---------------------------------------------------------------------------
+
+Udf_Live Instant TMLY
+
+=If(IsNull([TransferNow Activity].[TN Transfer Count] Where (FormatDate([TransferNow Activity].[Month Year];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else [TransferNow Activity].[TN Transfer Count] Where (FormatDate([TransferNow Activity].[Month Year];"Mmm-yy") = [Udf_This Month Last Year])
+
+
+total([TN Transfer Count] for[Udf_This Month Last Year])
+
+
+---------------------------------------------------------------------------------
+Udf_Live Instant L12M
+
+
+=If(IsNull([TransferNow Activity].[TN Transfer Count] Where ([TransferNow Activity].[Date] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))) = 1) Then 0 Else [TransferNow Activity].[TN Transfer Count] Where ([TransferNow Activity].[Date] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))
+
+total([TN Transfer Count] for([Date] Between [Udf_Last 12 Months Start Date] And [Udf_Last 12 Months End Date]))
+
+
+---------------------------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))) = 1) Then 0 Else ([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))
+
+--------------------------------------------------------------------------------------------
+Reporting Month Year
+
+=FormatDate(ToDate([Month Year TN];"Mmm yyyy");"Mmm yyyy") Where ([Month End Date TN] >[Udf_L2L12M End Month End Date])
+
+Case When
+      [Month End Date] >[Udf_L2L12M End Month End Date]
+then
+   to_char([Month Year],'Mon-yyyy')
+end
+
+
+Udf_L2L12M End Month End Date
+
+=LastDayOfMonth(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-12;MonthPeriod))
+
+to_char(_last_of_month (_add_months(?pMonth_Begin_Date?,-12)),'MM/dd/yy')
+
+
+--------------------------------------------------------------------------------------------------------------
+Udf_Previous Month
+
+=FormatDate(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-1;MonthPeriod);"Mmm-yy")
+
+to_char(_add_months (?pMonthBeginDate?,-1),'Mon-yy')
+-------------------------------------------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+ Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) 
+- (([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+/(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+
+
+(total([TN Transfer Count] for [Udf_This Month])+total([TN Transfer Count - BOFA] for [Udf_This Month]))-(total([TN Transfer Count] for [Udf_Previous Month])+total([TN Transfer Count - BOFA] for [Udf_Previous Month]))/(total([TN Transfer Count] for [Udf_Previous Month])+total([TN Transfer Count - BOFA] for [Udf_Previous Month])) 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+(total([TN Transfer Count] for [Udf_This Month])+total([TN Transfer Count - BOFA] for [Udf_This Month]))-(total([TN Transfer Count] for [Udf_This Month Last Year])+total([TN Transfer Count - BOFA] for [Udf_This Month Last Year]))/(total([TN Transfer Count] for [Udf_This Month Last Year])+total([TN Transfer Count - BOFA] for [Udf_This Month Last Year]))
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+=If(IsNull(([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) 
+- (([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+/(([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+
+(total([TN Transfer Amount] for [Udf_This Month])+total([TN Transfer Amount - BOFA] for [Udf_This Month]))-(total([TN Transfer Amount] for [Udf_Previous Month])+total([TN Transfer Amount - BOFA] for [Udf_Previous Month]))/(total([TN Transfer Amount] for [Udf_Previous Month])+total([TN Transfer Amount - BOFA] for [Udf_Previous Month]))
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+=If(IsNull(([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([Distinct TN].[TN Transfer Amount] + [Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+
+(total([TN Transfer Amount] for [Udf_This Month])+total([TN Transfer Amount - BOFA] for [Udf_This Month]))-(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))/(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))
+------------------------------------------------------------------------------------------------------------------
+Second table
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) 
+- (([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+/(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) 
+- (([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+/(([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month])))
+
+------------------------------------------------------------------------------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([TransferNow Activity].[TN Transfer Amount]+[TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+---------------------------------------------------------------------------------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+
+
+
+
+
+Case 
+When ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])=0 then 0
+When ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+then ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+end
+
+
+Case
+When (([Transfer Direction] = "Inbound") And (to_char([Month Year];'Mmm-yy') = [Udf_This Month])))
+then ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+end
+
+Case
+When(([Transfer Direction] = 'Inbound') And (to_char([Month Year],'Mmm-yy') = [Udf_This Month]))
+then ([TN Transfer Count] + [TN Transfer Count - BOFA])
+end
+
+
+
+Case 
+When ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])=0 then 0
+When ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+then ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+end
+
+
+Case
+When(([Transfer Direction] = 'Inbound') And (to_char([Month Year],'Mmm-yy') = [Udf_This Month]))
+then ([TN Transfer Count] + [TN Transfer Count - BOFA])
+end
+
+
+
+
+
+
+
+
+
+case 
+  when coalesce(
+         sum(
+           [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+         ) for [Month Year TN] = ?Udf_Previous_Month?
+       , 0) = 0 
+  then 0 
+  else 
+    (
+      sum(
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+      ) for [Month Year TN] = ?Udf_This_Month?
+      -
+      sum(
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+      ) for [Month Year TN] = ?Udf_Previous_Month?
+    )
+    /
+    coalesce(
+      sum(
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+      ) for [Month Year TN] = ?Udf_Previous_Month?
+    , 1)
+end
+-------------------------------------------------------
+case 
+  when coalesce(
+         sum(
+           [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+         ) for [Month Year] = [Udf_Previous_Month]
+       , 0) = 0 
+  then 0 
+  else 
+    (
+      sum(
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+      ) for [Month Year] = [Udf_This_Month]
+      -
+      sum(
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+      ) for [Month Year] = [Udf_Previous_Month]
+    )
+    /
+    coalesce(
+      sum(
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+      ) for [Month Year] = [Udf_Previous_Month]
+    , 1)
+end
+
+
+
+=LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after") > 0 Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after"); 200); Char(13)) - 1); "Include Users that registered after";"");"Greater than";"")))
+----------------------------------------------------------------------------------------------------------------
+Incoming transfer volume growth, compared to the previous month
+
+Case 
+When ([TN Transfer Count] + [[TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Inbound') And (To_char([Month Year TN],'Mmmm-yyyy') = [Udf_This Month])))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Inbound') )
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+-----------------------------------------------------------------
+Corect
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Inbound') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+-------------------------------------------------------------------
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+Corect
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Inbound') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+-------------------------------------------------------------------------------------------------
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Outbond') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Outbond') And (([Month Year]) = [Udf_Previous Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+
+-----------------------------------------------------------------
+Incoming transfer volume growth, compared to the previous year
+
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))))
+
+I
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Outbond') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+II
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Inbound') And (([Month Year]) = [Udf_This Month Last Year]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+---------------------------------------------------------------------------------
+Outgoing transfer volume growth, compared to the previous year
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))))
+
+
+
+
+I
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Outbond') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+II
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Outbond') And (([Month Year]) = [Udf_This Month Last Year]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+---------------------------------------------------------------------------------------------
+Next Day transfer volume growth, compared to the previous month
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Next Day") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Next Day") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Next Day") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Next Day") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Next Day') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+II
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Next Day') And (([Month Year]) = [Udf_Previous Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+--------------------------------------------------------------------------------------------
+Standard transfer volume growth, compared to the previous month
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Standard") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Standard") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) 
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Standard") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Speed] = "Standard") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_Previous Month]))))
+
+
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Standard') And (([Month Year]) = [Udf_This Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+II
+Case 
+When ([TN Transfer Count] + [TN Transfer Count - BOFA])=0 then 0
+When ([TN Transfer Count] + [TN Transfer Count - BOFA]) is null then 0
+
+When
+(([Transfer Direction] = 'Standard') And (([Month Year]) = [Udf_Previous Month]))
+then ([TN Transfer Count]+ [TN Transfer Count - BOFA])
+end
+
+
+---------------------------------------------------------------------------------------------------------
+Transacted FIs
+
+
+May-24-----May-23
+
+=([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+
+
+(total([TN Transacted FI Count] for [Udf_This Month])+total([TN Transacted FI Count - BOFA] for [Udf_This Month]))
+
+=([Distinct TN].[TN Transacted FI Count]  + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+
+(total([TN Transacted FI Count] for [Udf_This Month Last Year])+total([TN Transacted FI Count - BOFA] for [Udf_This Month Last Year]))
+
+
+=If(IsNull(([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA]) Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+
+((total([TN Transacted FI Count] for [Udf_This Month])+total([TN Transacted FI Count - BOFA] for [Udf_This Month]))-(total([TN Transacted FI Count] for [Udf_This Month Last Year])+total([TN Transacted FI Count - BOFA] for [Udf_This Month Last Year])))/(total([TN Transacted FI Count] for [Udf_This Month Last Year])+total([TN Transacted FI Count - BOFA] for [Udf_This Month Last Year]))
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Transacted Users
+
+=([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+
+(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month]))
+
+
+
+=([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+
+(total([TN Transacted User Count] for [Udf_This Month Last Year])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year]))
+
+
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where(FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+
+
+((total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month]))-(total([TN Transacted User Count] for [Udf_This Month Last Year])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year])))/(total([TN Transacted User Count] for [Udf_This Month Last Year])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year]))
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Transfers
+
+=([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+
+
+(total([TN Transfer Count] for [Udf_This Month])+total([TN Transfer Count - BOFA] for [Udf_This Month]))
+
+=([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+
+
+(total([TN Transfer Count] for [Udf_This Month])+total([TN Transfer Count - BOFA] for [Udf_This Month Last Year]))
+
+
+=If(IsNull(([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+- (([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+/(([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+
+((total([TN Transfer Count] for [Udf_This Month])+total([TN Transfer Count - BOFA] for [Udf_This Month]))-(total([TN Transfer Count] for [Udf_This Month Last Year])+total([TN Transfer Count - BOFA] for [Udf_This Month Last Year])))/(total([TN Transfer Count] for [Udf_This Month Last Year])+total([TN Transfer Count - BOFA] for [Udf_This Month Last Year]))
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Average Transfers/User
+
+=[Udf_Avg Transfer/User TM]
+
+=If (IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) = 1) Then 0 Else 
+((([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+/ (([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+
+(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month]))/(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month]))
+
+
+
+=[Udf_Avg Transfer/User TMLY]
+
+
+=If (IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else 
+((([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))
+/ (([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year]))/(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year]))
+
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))=1) Then 0
+ElseIf(IsNull([Udf_Avg Transfer/User TMLY]) = 1) Then 0 Else (([Udf_Avg Transfer/User TM]-[Udf_Avg Transfer/User TMLY])/[Udf_Avg Transfer/User TMLY])
+
+
+Case 
+ When ([Udf_Avg Transfer/User TMLY] = 1) then 0
+Else
+(([Udf_Avg Transfer/User TM] - [Udf_Avg Transfer/User TMLY]) / [Udf_Avg Transfer/User TMLY])
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Dollars Transferred
+
+=([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+
+(total([TN Transfer Amount] for [Udf_This Month])+total([TN Transfer Amount - BOFA] for [Udf_This Month]))
+
+
+
+=([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])
+
+(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))
+
+
+=If(IsNull(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])
+- ([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))
+/([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))
+
+((total([TN Transfer Amount] for [Udf_This Month])+total([TN Transfer Amount - BOFA] for [Udf_This Month]))-(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year])))/(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Average Transfer Amount-I
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])) = 1) Then 0 Else
+(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])  Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+
+
+
+(total([TN Transfer Amount] for [Udf_This Month])+total([TN Transfer Amount - BOFA] for [Udf_This Month]))/(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month]))
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))
+
+
+(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))/(total([TN Transacted User Count] for [Udf_This Month Last Year])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year]))
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+- ((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))))
+/((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])
+ Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year])))
+
+
+((total([TN Transfer Amount] for [Udf_This Month])+total([TN Transfer Amount - BOFA] for [Udf_This Month]))/(total([TN Transacted User Count] for [Udf_This Month])+total([TN Transacted User Count - BOFA] for [Udf_This Month]))-(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))/(total([TN Transacted User Count] for [Udf_This Month Last Year])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year])))/(total([TN Transfer Amount] for [Udf_This Month Last Year])+total([TN Transfer Amount - BOFA] for [Udf_This Month Last Year]))/(total([TN Transacted User Count] for [Udf_This Month Last Year])+total([TN Transacted User Count - BOFA] for [Udf_This Month Last Year]))
+
+--------------------------------------------------------------------------------------------------------------------
+
+May-24
+
+
+
+
+Transacted FIs
+
+
+=([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA] )Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))
+
+
+Case
+When 
+([Month End Date] Between [Udf_L2L12M Start Month End Date] And [Udf_L2L12M End Month End Date])
+then
+[TN Transacted FI Count] + [TN Transacted FI Count - BOFA]
+end
+
+
+=([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA] ) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))
+
+Case
+When 
+([Month End Date] Between [Udf_L2L12M Start Month End Date] And [Udf_L2L12M End Month End Date])
+then
+[TN Transacted FI Count] + [TN Transacted FI Count - BOFA]
+end
+
+
+=If(IsNull(([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA] ) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else
+(((([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA] ) Where ([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))) 
+- (([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA] )Where ([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+/(([Distinct TN].[TN Transacted FI Count] + [Distinct TN - BOFA].[TN Transacted FI Count - BOFA] ) Where ([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+
+
+
+----------------------------------------------------------------------------------
+Transacted Users
+
+
+=([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))
+
+Case
+When 
+([Month End Date] Between [Udf_L12M Start Month End Date] And [Udf_L12M End Month End Date])
+then
+[TN Transacted User Count] + [TN Transacted User Count - BOFA]
+end
+
+
+
+=([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))
+
+
+Case
+When 
+([Month End Date] Between [Udf_L2L12M Start Month End Date] And [Udf_L2L12M End Month End Date])
+then
+[TN Transacted User Count] + [TN Transacted User Count - BOFA]
+end
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else
+(((([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where ([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))) 
+- (([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where ([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where ([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+
+
+
+-----------------------------------------------------------------------------------
+Transfers
+
+=([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))
+
+
+Case
+When 
+([Month End Date] Between [Udf_L12M Start Month End Date] And [Udf_L12M End Month End Date])
+then
+[TN Transfer Count] + [TN Transfer Count - BOFA]
+end
+
+
+=([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))
+
+
+Case
+When 
+([Month End Date] Between [Udf_L2L12M Start Month End Date] And [Udf_L2L12M End Month End Date])
+then
+[TN Transfer Count] + [TN Transfer Count - BOFA]
+end
+
+
+=If(IsNull(([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))) 
+- (([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+/(([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+
+---------------------------------------------------------------------------------------------------------------------------
+
+Average Transfers/User
+
+=[Udf_Avg Transfer/User L12M]
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))) = 1) Then 0 Else 
+((([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date])))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))))
+
+
+
+
+
+
+=Udf_Avg Transfer/User L2L12M
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else 
+((([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))
+/(([Distinct TN].[TN Transfer Count] + [Distinct TN - BOFA].[TN Transfer Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))=1) Then 0
+ElseIf(IsNull([Udf_Avg Transfer/User L2L12M]) = 1) Then 0 Else (([Udf_Avg Transfer/User L12M]-[Udf_Avg Transfer/User L2L12M])/[Udf_Avg Transfer/User L2L12M])
+
+Case 
+ When ([Udf_Avg Transfer/User L2L12M] = 1) then 0
+Else
+(([Udf_Avg Transfer/User L12M] - [Udf_Avg Transfer/User L2L12M]) / [Udf_Avg Transfer/User L2L12M])
+
+
+
+--------------------------------------------------------------------------------------------------
+
+Dollars Transferred
+
+
+=([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))
+
+
+Case
+When 
+([Month End Date] Between [Udf_L12M Start Month End Date] And [Udf_L12M End Month End Date])
+then
+[TN Transfer Amount] + [TN Transfer Amount - BOFA]
+end
+
+
+
+=([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))
+
+
+Case
+When 
+([Month End Date] Between [Udf_L2L12M Start Month End Date] And [Udf_L2L12M End Month End Date])
+then
+[TN Transfer Amount] + [TN Transfer Amount - BOFA]
+end
+
+
+
+
+
+=If(IsNull(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))) 
+- (([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+/(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+Average Transfer Amount
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])
+ Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))) = 1) Then 0 Else
+(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date])))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date])))
+
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where(
+[Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else
+(([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))
+
+
+
+Doller Transfered-V
+Transfer-V
+
+
+
+
+=If(IsNull(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))) = 1) Then 0 Else
+(((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date])))/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L12M Start Month End Date];[Udf_L12M End Month End Date]))))-((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))))
+
+/((([Distinct TN].[TN Transfer Amount] +[Distinct TN - BOFA].[TN Transfer Amount - BOFA]) Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date])))
+/(([Distinct TN].[TN Transacted User Count] + [Distinct TN - BOFA].[TN Transacted User Count - BOFA])
+ Where([Month End Date TN] Between([Udf_L2L12M Start Month End Date];[Udf_L2L12M End Month End Date]))))
+
+
+(Dollars Transferred-IV/Transacted Users-IV)-(Dollars Transferred-V/Transacted Users-V)/(Dollars Transferred-V/Transacted Users-V)
+
+------------------------------------------------------------------------------------
+
+Second Table on First Page
+
+Clients-Transacted FIs-I---Transacted FIs-II-Transacted FIs-III-Transacted FIs-IV-Transacted FIs-V-Transacted FIs-VI
+
+Transfers-Transfers-I-Transfers-II-Transfers-III-Transfers-IV-Transfers-V-Transfers-VI
+
+Dollars Sent- Dollars Transferred-I-Dollars Transferred-II-Dollars Transferred-III-Dollars Transferred-IV-Dollars Transferred-V-Dollars Transferred-VI
+
+Transacted Users- Transacted Users-I-Transacted Users-II-Transacted Users-III-Transacted Users-IV-Transacted Users-V-Transacted Users-VI
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Second Page Measures
+
+Inbound Transfers-I
+
+=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+
+
+
+count(([TN Transfer Count]) for ([Transfer Direction] = 'Inbound' AND [Month Year] = [Udf_This Month]))
++
+count(([TN Transfer Count - BOFA]) for ([Transfer Direction] = 'Inbound' AND [Month Year] = [Udf_This Month]))
+
+to_char(?pMonth_Begin_Date?, 'Mon-yy')
+
+
+Inbound Transfers-II
+
+=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Inbound' and ([Date] between [Udf_Last 12 Months Start Date] and [Udf_Last 12 Months End Date] ) ) THEN ([TN Transfer Count] + [TN Transfer Count - BOFA])
+ELSE (0)
+END
+
+
+
+Inbound Transfers-III
+
+=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Inbound' and ([Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date] ) ) THEN ([TN Transfer Count] + [TN Transfer Count - BOFA])
+ELSE (0)
+END
+
+
+
+Inbound Transfers-IV
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) = 1) Then 0 Else
+
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([TransferNow Activity].[Date] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))
+
+(Inbound Transfers-II-Inbound Transfers-III)/Inbound Transfers-III
+
+
+---------------------------------------------------------------------------------------
+
+Outbound Transfers-I
+
+
+=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+
+
+count(([TN Transfer Count]) for ([Transfer Direction] = 'Outbound' AND [Month Year] = [Udf_This Month]))
++
+count(([TN Transfer Count - BOFA]) for ([Transfer Direction] = 'Outbound' AND [Month Year] = [Udf_This Month]))
+
+
+Outbound Transfers-II
+
+=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Outbound' and ([Date] between [Udf_Last 12 Months Start Date] and [Udf_Last 12 Months End Date] ) ) THEN ([TN Transfer Count] + [TN Transfer Count - BOFA])
+ELSE (0)
+END
+
+
+Outbound Transfers-III
+
+=([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))
+
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Outbound' and ([Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date] ) ) THEN ([TN Transfer Count] + [TN Transfer Count - BOFA])
+ELSE (0)
+END
+
+
+Outbound Transfers-IV
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) = 1) Then 0 Else
+(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
+- (([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))
+
+
+(Outbound Transfers-II-
+Outbound Transfers-III)/Outbound Transfers-III
+
+
+
+---------------------------------------------------------------
+Inbound Dollars Transferred-I
+
+=([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+
+
+total(([TN Transfer Amount]) for ([Transfer Direction] = 'Inbound' AND [Month Year] = [Udf_This Month]))
++
+total(([TN Transfer Amount - BOFA]) for ([Transfer Direction] = 'Inbound' AND [Month Year] = [Udf_This Month]))
+
+
+Inbound Dollars Transferred-II
+
+=([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Inbound' and ([Date] between [Udf_Last 12 Months Start Date] and [Udf_Last 12 Months End Date] ) ) THEN ([TN Transfer Amount] + [TN Transfer Amount - BOFA])
+ELSE (0)
+END
+
+
+
+Inbound Dollars Transferred-III
+
+
+
+=([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Inbound' and ([Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date] ) ) THEN ([TN Transfer Amount] + [TN Transfer Amount - BOFA])
+ELSE (0)
+END
+
+
+Inbound Dollars Transferred-IV
+
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) = 1) Then 0 Else
+
+(((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
+- (([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))
+
+/(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))
+
+
+(Inbound Dollars Transferred-II-Inbound Dollars Transferred-III)/Inbound Dollars Transferred-III
+
+
+
+-------------------------------------------------------------------------------------------------
+Outbound Dollars Transferred-I
+
+=([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+
+
+total(([TN Transfer Amount]) for ([Transfer Direction] = 'Outbound' AND [Month Year] = [Udf_This Month]))
++
+total(([TN Transfer Amount - BOFA]) for ([Transfer Direction] = 'Outbound' AND [Month Year] = [Udf_This Month]))
+
+
+
+Outbound Dollars Transferred-II
+
+=([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))
+
+
+CASE 
+WHEN  ([Transfer Direction] = 'Outbound' and ([Date] between [Udf_Last 12 Months Start Date] and [Udf_Last 12 Months End Date] ) ) THEN ([TN Transfer Amount] + [TN Transfer Amount - BOFA])
+ELSE (0)
+END
+
+
+Outbound Dollars Transferred-III
+
+=([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))
+
+CASE 
+WHEN  ([Transfer Direction] = 'Outbound' and ([Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date] ) ) THEN ([TN Transfer Amount] + [TN Transfer Amount - BOFA])
+ELSE (0)
+END
+
+
+Outbound Dollars Transferred-IV
+
+(Outbound Dollars Transferred-II-Outbound Dollars Transferred-III)/Outbound Dollars Transferred-III
+
+
+---------------------------------------------------------------------------------------------------
+Net Funds Flow-I
+
+
+=(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+- (([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+Inbound Dollars Transferred-I-Outbound Dollars Transferred-I
+
+
+Net Funds Flow-II/Udf_NetFundFlow_L12M
+
+=[Udf_NetFundFlow_L12M]
+
+=(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))---------------------Inbound Dollars Transferred-II
+
+
+- (([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))---------------------Outbound Dollars Transferred-II
+
+
+Inbound Dollars Transferred-II-Outbound Dollars Transferred-II
+
+
+Net Funds Flow-III/Udf_NetFundFlow_L2L12M
+
+
+=[Udf_NetFundFlow_L2L12M]
+
+
+=(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))----------------Inbound Dollars Transferred-III
+
+- (([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))----------------Outbound Dollars Transferred-III
+
+
+Inbound Dollars Transferred-III-Outbound Dollars Transferred-III
+
+
+Net Funds Flow-IV
+=If(([Udf_NetFundFlow_L2L12M]) = 0) Then 0 Else
+(([Udf_NetFundFlow_L12M] - [Udf_NetFundFlow_L2L12M])/[Udf_NetFundFlow_L2L12M])
+
+
+([Udf_NetFundFlow_L12M]-[Udf_NetFundFlow_L2L12M])/[Udf_NetFundFlow_L2L12M]
+
+
+
+------------------------------------------------------------------------------------------------------
+
+Average Inbound Transfer Amount-I
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) = 1) Then 0 Else
+
+(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))------Inbound Dollars Transferred-I
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))-----------Inbound Transfers-I
+
+
+Inbound Dollars Transferred-I/Inbound Transfers-I
+
+
+Average Inbound Transfer Amount-II/Udf_Avg_In_Transfer_L12M
+
+
+=[Udf_Avg_In_Transfer_L12M]
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))) = 1) Then 0 Else
+
+(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))--------------Inbound Dollars Transferred-II
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))--------------------Inbound Transfers-II
+
+
+Inbound Dollars Transferred-II/Inbound Transfers-II
+
+Average Inbound Transfer Amount-III/Udf_Avg_In_Transfer_L2L12M
+
+Udf_Avg_In_Transfer_L2L12M
+
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) = 1) Then 0 Else
+
+(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))------Inbound Dollars Transferred-III
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+ Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))----Inbound Transfers-III
+
+
+Inbound Dollars Transferred-III/Inbound Transfers-III
+
+
+Average Inbound Transfer Amount-IV
+
+=If([Udf_Avg_In_Transfer_L2L12M] =0) Then 0 Else
+(([Udf_Avg_In_Transfer_L12M]
+-[Udf_Avg_In_Transfer_L2L12M])
+/[Udf_Avg_In_Transfer_L2L12M])
+
+([Udf_Avg_In_Transfer_L12M]
+-[Udf_Avg_In_Transfer_L2L12M])
+/[Udf_Avg_In_Transfer_L2L12M]
+------------------------------------------------------------
+
+Average Outbound Transfer Amount-I
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))) = 1) Then 0 Else
+
+(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))----------------Outbound Dollars Transferred-I
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))-----------------Outbound Transfers-I
+
+
+Outbound Dollars Transferred-I/Outbound Transfers-I
+
+
+
+Average Outbound Transfer Amount-II/Udf_Avg_Out_Transfer_L12M
+=[Udf_Avg_Out_Transfer_L12M]
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))) = 1) Then 0 Else
+
+(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))---------------Outbound Dollars Transferred-II
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))----------------Outbound Transfers-II
+
+
+Outbound Dollars Transferred-II/Outbound Transfers-II
+
+Average Outbound Transfer Amount-III/Udf_Avg_Out_Transfer_L2L12M
+=[Udf_Avg_Out_Transfer_L2L12M]
+
+=If(IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) = 1) Then 0 Else
+
+(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))---Outbound Dollars Transferred-III
+
+/(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))--------Outbound Transfers-III
+
+
+Outbound Dollars Transferred-III-Outbound Transfers-III
+
+
+
+Average Outbound Transfer Amount-IV
+
+=If([Udf_Avg_Out_Transfer_L2L12M] =0) Then 0 Else
+(([Udf_Avg_Out_Transfer_L12M]
+-[Udf_Avg_Out_Transfer_L2L12M])
+/[Udf_Avg_Out_Transfer_L2L12M])
+
+
+
+_________________________________
+
+
+Inbound Transfers %-I
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))))
+
+
+
+(Inbound Transfers-I/(Inbound Transfers-I+Outbound Transfers-I)
+
+
+
+
+Inbound Transfers %-II
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))))
+
+
+  Inbound Transfers-II/(Inbound Transfers-II+ Outbound Transfers-II)
+
+
+Inbound Transfers %-III
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))))
+
+Inbound Transfers-III/(Inbound Transfers-III + Outbound Transfers-III)
+
+
+Inbound Transfers %-IV
+
+
+=(If(IsNull((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))) =1) Then 0 Else
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))) )
+-
+( If(IsNull((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))=1) Then 0 Else
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))) )
+
+
+
+Inbound Transfers %-II-Inbound Transfers %-III
+
+
+-------------------------------------------------------------------------
+
+
+Outbound Transfers %-I
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))))) = 1) Then 0 Else
+
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))))
+
+
+Outboand Transfer-I/(Inbond Transfer-I + Outbond transfer-I)
+
+
+Outbound Transfers %-II
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))))
+
+
+Outbound Transfers %-III
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))))
+
+
+Outbound Transfers %-IV
+
+
+
+
+
+=(If(IsNull((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))) =1) Then 0 Else
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))) )
+-
+( If(IsNull((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))=1) Then 0 Else
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN]Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))) )
+
+
+
+
+_------------------------------------------------------------------------------------
+Inbound Dollars Transferred %-I
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))))) = 1) Then 0 Else
+
+
+((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+/ ((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))))
+
+
+Inbound Dollars Transferred-I/(Inbound Dollars Transferred-I+Outbound Dollars Transferred-I)
+
+
+Inbound Dollars Transferred %-II
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))) = 1) Then 0 Else
+((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))))
+
+
+Inbound Dollars Transferred-II/(Inbound Dollars Transferred-II+Outbound Dollars Transferred-II)
+
+
+Inbound Dollars Transferred %-III
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+
+/ ((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))))
+
+nbound Dollars Transferred-III/(Inbound Dollars Transferred-III+Outbound Dollars Transferred-III)
+
+
+
+Inbound Dollars Transferred %-IV
+
+=(If(IsNull((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))=1) Then 0 Else
+((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))))) )
+ - 
+(If(IsNull((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))=1)Then 0 Else
+((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
+/ ((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date]))))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))))) )
+
+--------------------------------------------------------------------------------------
+
+
+
+Outbound Dollars Transferred %-I
+
+=If(IsNull(((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))))) = 1) Then 0 Else
+
+((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
+/ ((([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Inbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))
+
++(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))))
+
+Outbound Dollars Transferred-I/(Outbound Dollars Transferred-I+Inbound Dollars Transferred-I)
