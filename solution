@@ -103,3 +103,7 @@ ParamDisplayValue('Select Dormant Period:') + ' days, as of ' + to_char(current_
 
 replace(ReportFilter('Has Received Money'), ';', ', ' || chr(13) || chr(10))
 replace(ReportFilter('Has Received Money'), ';', ', ' + chr(13) + chr(10))
+
+
+=LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than") > 0 
+Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); 200); Char(13)) - 1); "Days since last transaction is more than ";"");"Greater than";"")))
