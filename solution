@@ -127,3 +127,7 @@ case
     ))
 end
 =If ([Udf_Large Clients TMLY] = 0) Then 0 Else (([Udf_Large Clients TM] - [Udf_Large Clients TMLY])/[Udf_Large Clients TMLY])
+CASE 
+  WHEN [Udf_Large Clients TMLY] = 0 THEN 0
+  ELSE ([Udf_Large Clients TM] - [Udf_Large Clients TMLY]) / [Udf_Large Clients TMLY]
+END
