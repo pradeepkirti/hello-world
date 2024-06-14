@@ -100,3 +100,5 @@ ParamDisplayValue('Select Dormant Period:') + ' days, as of ' + to_char(current_
 =Replace(ReportFilter([Has Sent Money (Non KTP)]);";";", "+Char(13)+Char(10))
 =Replace(ReportFilter([Has Transacted]);";";", "+Char(13)+Char(10))
 =Replace(ReportFilter([Home Name - ID]);";";", "+Char(13)+Char(10))
+
+replace(ReportFilter('Has Received Money'), ';', ', ' || chr(13) || chr(10))
