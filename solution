@@ -5,3 +5,48 @@ total (
         else 0 
     end
 )
+
+
+
+
+ReportFilter-Home
+
+
+=Replace(ReportFilter([Home Name - ID]);";";", "+Char(13)+Char(10))
+
+ReportFilter-DormantPeriod
+
+=UserResponse("Select Dormant Period:") + " days, as of " + FormatDate(RelativeDate(CurrentDate();-1); "Mmmm d, yyyy")
+
+Has Transacted
+
+=If IsNull([Last Send Date]) And IsNull([Last Received Money Date]) And IsNull([Last Request-to-Pay Sent Date])
+Then "No"
+Else "Yes"
+
+ReportFilter-HasTransacted
+
+=Replace(ReportFilter([Has Transacted]);";";", "+Char(13)+Char(10))
+
+Has Sent Money (Non KTP)
+
+=If IsNull([Last Send Money Date (Non-KTP)])
+Then "No"
+Else "Yes"
+
+
+=[ReportFilter-HasSentMoneyNonKTP]
+
+
+=Replace(ReportFilter([Has Sent Money (Non KTP)]);";";", "+Char(13)+Char(10))
+
+Has Sent Money (KTP)
+
+=If IsNull([Last KTP Send Money Date])
+Then "No"
+Else "Yes"
+
+
+=[ReportFilter-HasSentMoneyKTP]
+
+=Replace(ReportFilter([Has Sent Money (KTP)]);";";", "+Char(13)+Char(10))
