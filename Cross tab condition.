@@ -1,0 +1,154 @@
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE")))
+
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))) In ([Home ID]))
+
+
+
+CASE
+   WHEN (count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year] AND [Mobile TransferNow Activity] = 'MOBILE') IS NULL OR 
+         count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year] AND [Mobile TransferNow Activity] = 'MOBILE')) = 0)
+   THEN 0
+   ELSE
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year] AND [Mobile TransferNow Activity] = 'MOBILE')) / 
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year]))
+END
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]) And ([Mobile TransferNow Activity] = "MOBILE")))
+
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month Last Year]))) In ([Home ID]))
+
+
+
+CASE
+   WHEN (count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year] AND [Mobile TransferNow Activity] = 'MOBILE') IS NULL OR 
+         count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year] AND [Mobile TransferNow Activity] = 'MOBILE')) = 0)
+   THEN 0
+   ELSE
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year] AND [Mobile TransferNow Activity] = 'MOBILE')) / 
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR (FormatDate([Month Year]; 'Mmm-yy') = [Udf_This Month Last Year]))
+END
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])) And ([Mobile TransferNow Activity] = "MOBILE")))
+
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))) In ([Home ID]))
+
+
+
+
+
+CASE
+   WHEN (count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date] AND [Mobile TransferNow Activity] = 'MOBILE')) IS NULL OR 
+         count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date] AND [Mobile TransferNow Activity] = 'MOBILE')) = 0)
+   THEN 0
+   ELSE
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date] AND [Mobile TransferNow Activity] = 'MOBILE')) / 
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date]))
+END
+
+
+
+----------------------------------------------------------------------------------------------
+
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])) And ([Mobile TransferNow Activity] = "MOBILE")))
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) In ([Home ID]))
+
+
+
+CASE
+   WHEN (count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date] AND [Mobile TransferNow Activity] = 'MOBILE') IS NULL OR 
+         count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date TN] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date] AND [Mobile TransferNow Activity] = 'MOBILE')) = 0)
+   THEN 0
+   ELSE
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date] AND [Mobile TransferNow Activity] = 'MOBILE')) / 
+      count(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) FOR ([Date] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date]))
+END
+
+--------------------------------------------------------------------------------------------------------------------------------
+=LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than") > 0 
+Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Days since last transaction is more than"); 200); Char(13)) - 1); "Days since last transaction is more than ";"");"Greater than";"")))
+
+
+
+
+
+Trim(Trim(Replace(Replace(If (InStr(ReportFilterSummary("Dormant P2P Users"), "Days since last transaction is more than") > 0)
+Then Substr(ReportFilterSummary("Dormant P2P Users"), InStr(ReportFilterSummary("Dormant P2P Users"), "Days since last transaction is more than"), 
+InStr(Substr(ReportFilterSummary("Dormant P2P Users"), InStr(ReportFilterSummary("Dormant P2P Users"), "Days since last transaction is more than"), 200), Char(13)) - 1), 
+"Days since last transaction is more than ", ""), "Greater than", ""), ' '))
+
+
+
+#trim(
+    replace(
+        replace(
+            case 
+                when locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')) > 0 
+                then substring(
+                        ReportFilterSummary('Dormant P2P Users'), 
+                        locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')), 
+                        locate(char(13), 
+                            substring(
+                                ReportFilterSummary('Dormant P2P Users'), 
+                                locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')), 
+                                200
+                            )
+                        ) - 1
+                    )
+                else ''
+            end, 
+            'Days since last transaction is more than ', ''
+        ), 
+        'Greater than', ''
+    )
+)#
+
+
+
+
+
+
+
+
+
+
+
+trim(
+    replace(
+        replace(
+            case 
+                when locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')) > 0 
+                then substring(
+                        ReportFilterSummary('Dormant P2P Users'), 
+                        locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')) + length('Days since last transaction is more than'), 
+                        locate(char(13), ReportFilterSummary('Dormant P2P Users') || char(13), locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users'))) 
+                        - locate('Days since last transaction is more than', ReportFilterSummary('Dormant P2P Users')) 
+                        - length('Days since last transaction is more than')
+                    )
+                else ''
+            end, 
+            'Greater than', ''
+        ), 
+        'Days since last transaction is more than ', ''
+    )
+)
+
+
+
+
+
+----------------------------------------------------------------------------------
+
+formatDate([Your Date Field], 'yyyy-MM-dd')
+
+to_char([Your Date Field], 'DD-MM-YYYY')
