@@ -226,3 +226,5 @@ GROUP BY
 
 iiiiii
 
+
+count(([TN Transfer Count] + [TN Transfer Count - BOFA])) for (([Date] Between([Udf_Last 12 Months Start Date],[Udf_Last 12 Months End Date])) And ([Transfer Speed] = "Instant")) In ([Transfer Speed]))
