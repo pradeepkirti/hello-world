@@ -228,3 +228,16 @@ iiiiii
 
 
 count(([TN Transfer Count] + [TN Transfer Count - BOFA])) for (([Date] Between([Udf_Last 12 Months Start Date],[Udf_Last 12 Months End Date])) And ([Transfer Speed] = "Instant")) In ([Transfer Speed]))
+
+
+
+COUNT(
+  CASE
+    WHEN ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date])
+         AND ([Transfer Speed] = 'Instant') THEN
+      ([TN Transfer Count] + [TN Transfer Count - BOFA])
+    ELSE NULL
+  END
+) OVER (PARTITION BY [Transfer Speed])
+
+
