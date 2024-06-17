@@ -306,27 +306,3 @@ iif(
 
 
 
-IF ( 
-    ISNULL(
-        AGGREGATE(
-            ([TN Transfer Count] + [TN Transfer Count - BOFA]),
-            [Date] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date] 
-            AND [Mobile TransferNow Activity] = 'MOBILE'
-        )
-    ) = 1
-) 
-THEN (0)
-ELSE (
-    AGGREGATE(
-        ([TN Transfer Count] + [TN Transfer Count - BOFA]),
-        [Date] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date]
-        AND [Mobile TransferNow Activity] = 'MOBILE'
-    )
-    /
-    TOTAL(
-        AGGREGATE(
-            ([TN Transfer Count] + [TN Transfer Count - BOFA]),
-            [Date] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date]
-        )
-    )
-)
