@@ -199,3 +199,47 @@ sum(
   [Measures].[TN Transacted FI Count]
   + [Measures].[TN Transacted FI Count - BOFA]
 ) - sum([Measures].[Large FIs])
+
+
+
+
+
+
+
+
+
+To convert the SAP BO expression to a Cognos Analytics expression, you need to adapt the syntax to match Cognos' standards. Here’s how you can rewrite the given SAP BO expression in Cognos Analytics:
+
+Original SAP BO Expression
+plaintext
+Copy code
+=If (IsNull(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])) And ([Mobile TransferNow Activity] = "MOBILE"))) = 1) Then 0 
+Else ((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])) And ([Mobile TransferNow Activity] = "MOBILE")))
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last to Last Year Start Date];[Udf_Last to Last Year End Date])))) In ([Home ID]))
+Cognos Analytics Expression
+plaintext
+Copy code
+IF ( 
+    ISNULL(
+        AGGREGATE(
+            ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]),
+            [Date TN] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date] 
+            AND [Mobile TransferNow Activity] = 'MOBILE'
+        )
+    ) = 1
+) 
+THEN (0)
+ELSE (
+    AGGREGATE(
+        ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]),
+        [Date TN] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date]
+        AND [Mobile TransferNow Activity] = 'MOBILE'
+    )
+    /
+    TOTAL(
+        AGGREGATE(
+            ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]),
+            [Date TN] BETWEEN [Udf_Last to Last Year Start Date] AND [Udf_Last to Last Year End Date]
+        )
+    )
+)
