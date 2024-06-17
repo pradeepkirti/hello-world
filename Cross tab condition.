@@ -241,3 +241,62 @@ COUNT(
 ) OVER (PARTITION BY [Transfer Speed])
 
 
+iif(
+  count(
+    [TN Transfer Count] + [TN Transfer Count - BOFA]
+  )
+  where [Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date]
+  and [Mobile TransferNow Activity] = 'MOBILE'
+  = 1,
+  0,
+  sum(
+   [TN Transfer Count] + [TN Transfer Count - BOFA]
+  )
+  where [Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date]
+  / sum(
+   [TN Transfer Count] + [TN Transfer Count - BOFA]
+  )
+  where [Date] between [Udf_Last to Last Year Start Date] and [Udf_Last to Last Year End Date]
+  and [Home ID] in (...)
+)
+
+
+
+Left Trim wala
+
+
+iif(
+  instr(
+    [ReportFilterSummary("Dormant P2P Users")],
+    "Days since last transaction is more than"
+  ) > 0,
+  trim(  -- Combine LeftTrim and RightTrim
+    substr(
+      [ReportFilterSummary("Dormant P2P Users")],
+      instr(
+        [ReportFilterSummary("Dormant P2P Users")],
+        "Days since last transaction is more than"
+      ),
+      instr(
+        substr(
+          [ReportFilterSummary("Dormant P2P Users")],
+          instr(
+            [ReportFilterSummary("Dormant P2P Users")],
+            "Days since last transaction is more than"
+          ),
+          200
+        ),
+        char(13)
+      ) - 1
+    )
+  ),
+  replace(
+    replace(
+      [ReportFilterSummary("Dormant P2P Users")],
+      "Days since last transaction is more than ",
+      ""
+    ),
+    "Greater than",
+    ""
+  )
+)
