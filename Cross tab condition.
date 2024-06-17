@@ -152,3 +152,8 @@ trim(
 formatDate([Your Date Field], 'yyyy-MM-dd')
 
 to_char([Your Date Field], 'DD-MM-YYYY')
+
+
+
+((([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])) And ([Mobile TransferNow Activity] = "MOBILE")))
+/(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))) In ([Home ID]))
