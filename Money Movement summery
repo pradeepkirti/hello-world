@@ -3,6 +3,9 @@ change from sap bo expression to cognos analytics expression.
 
 =DocumentName() + " > " + ReportName()
 
+'Your Document Name > ' || 'Your Report Name'
+
+
 2-Home Heading
 
 =Replace(UserResponse("Select Homes:");";";"; ")
@@ -52,52 +55,106 @@ extract(year, [Month Begin Date]) + '-' + right('0' + cast(extract(month, [Month
 
 =[$Amount of Received Transactions - On-Us]
 
+[Amount of Received Transactions - On-Us]
+[Amount of Received Transactions - On-Us] * 1.05  -- Example of applying a 5% increase
+
+
 9- $Amount Send - KTP
 
 =[$Amount of Completed Send Transactions - KTP]
+
+[Amount of Completed Send Transactions - KTP]
+
+[Amount of Completed Send Transactions - KTP] * 1.10  -- Example of applying a 10% increase
+
 
 10-$Amount Send - On-Other
 
 =[$Amount of Completed Send Transactions - On-Other]
 
+[Amount of Completed Send Transactions - On-Other]
+
+[Amount of Completed Send Transactions - On-Other] + 500  -- Example of adding a constant value
+
+
 11-$Amount Send - On-Us
 
 =[$Amount of Completed Send Transactions - On-Us]
+[Amount of Completed Send Transactions - On-Us]
+
+[Amount of Completed Send Transactions - On-Us] * 1.05  -- Example of applying a 5% increase
+
+
 
 12- Avg Received Transaction $Amount
 
 =[$Amount of Received Transactions] / [Received Transactions]
 
+[Amount of Received Transactions] / [Received Transactions]
+
+[Amount of Received Transactions] / [Received Transactions] * 100  -- Calculate percentage
+
+
+
 13- Avg Send Transaction $Amount
 
 =[$Amount of Completed Send Transactions] / [Completed Send Transactions]
+
+[Amount of Completed Send Transactions] / [Completed Send Transactions]
+[Amount of Completed Send Transactions] / [Completed Send Transactions] * 100  -- Calculate percentage
+
 
 14-Inbound %
 
 =[$Amount of Received Transactions] / [Total $Amount Moved]
 
+[Amount of Received Transactions] / [Total $Amount Moved]
+[Amount of Received Transactions] / [Total $Amount Moved] * 100  -- Calculate percentage
+
+
+
 15-Oldest Month
 
 =Min([Month Begin Date])
+
+minimum([Month Begin Date])
+minimum([Month Begin Date]) <= current_date
+
 
 16-Outbound %
 
 =[$Amount of Completed Send Transactions] / [Total $Amount Moved]
 
+[Amount of Completed Send Transactions] / [Total $Amount Moved]
+([Amount of Completed Send Transactions] / [Total $Amount Moved]) * 100  -- Calculate percentage of completed send transactions
+
+
 17-Recent Month
 
 =Max([Month Begin Date])
+maximum([Month Begin Date])
+maximum([Month Begin Date]) >= current_date - 365
+
 
 18-Report Month Begin
 
 =FormatDate([Oldest Month]; "mmmm yyyy")
+to_char([Oldest Month], 'Month yyyy')
+'Oldest Month: ' || to_char([Oldest Month], 'Month yyyy')
+
 
 19-Report Month End
 =FormatDate([Recent Month]; "mmmm yyyy")
 
+to_char([Recent Month], 'Month yyyy')
+'Recent Month: ' || to_char([Recent Month], 'Month yyyy')
+
+
 20-Total $Amount Moved
 
 =[$Amount of Completed Send Transactions] + [$Amount of Received Transactions]
+[Amount of Completed Send Transactions] + [Amount of Received Transactions]
+[Amount of Completed Send Transactions] + [Amount of Received Transactions]
 
 
 21-
