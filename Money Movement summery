@@ -168,4 +168,8 @@ Else "Report Range: " + [Report Month Begin] + " - " + [Report Month End]
 =If IsNull([Month Year]) Then " " 
 Else [Report Month Begin] + " - " + [Report Month End]
 
+if (isnull([Month Year])) then
+    ' '
+else
+    [Report Month Begin] + ' - ' + [Report Month End]
 
