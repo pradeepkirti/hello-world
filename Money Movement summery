@@ -163,3 +163,9 @@ to_char([Recent Month], 'Month yyyy')
 Else "Report Range: " + [Report Month Begin] + " - " + [Report Month End]
 
 
+22-
+
+=If IsNull([Month Year]) Then " " 
+Else [Report Month Begin] + " - " + [Report Month End]
+
+
