@@ -1,1 +1,86 @@
+1-Document-Report Name
+
+=DocumentName() + " > " + ReportName()
+
+2-Home Heading
+
+=Replace(UserResponse("Select Homes:");";";"; ")
+
+3-ReportFilter-Home
+
+=Replace(ReportFilter([Home Name - ID]);";";", "+Char(13)+Char(10))
+
+4-ReportFilter-ReportYearMonth
+
+=Replace(ReportFilter([Report Year Month]);";";", "+Char(13)+Char(10))
+
+5-ReportFilter-UserCategory
+
+=Replace(ReportFilter([User Category]);";";", "+Char(13)+Char(10))
+
+6-Report Year Month
+
+=FormatDate([Month Begin Date]; "yyyy-MM")
+
+7- $Amount Received - On-Other
+
+=[$Amount of Received Transactions - On-Other]
+
+8-$Amount Received - On-Us
+
+=[$Amount of Received Transactions - On-Us]
+
+9- $Amount Send - KTP
+
+=[$Amount of Completed Send Transactions - KTP]
+
+10-$Amount Send - On-Other
+
+=[$Amount of Completed Send Transactions - On-Other]
+
+11-$Amount Send - On-Us
+
+=[$Amount of Completed Send Transactions - On-Us]
+
+12- Avg Received Transaction $Amount
+
+=[$Amount of Received Transactions] / [Received Transactions]
+
+13- Avg Send Transaction $Amount
+
+=[$Amount of Completed Send Transactions] / [Completed Send Transactions]
+
+14-Inbound %
+
+=[$Amount of Received Transactions] / [Total $Amount Moved]
+
+15-Oldest Month
+
+=Min([Month Begin Date])
+
+16-Outbound %
+
+=[$Amount of Completed Send Transactions] / [Total $Amount Moved]
+
+17-Recent Month
+
+=Max([Month Begin Date])
+
+18-Report Month Begin
+
+=FormatDate([Oldest Month]; "mmmm yyyy")
+
+19-Report Month End
+=FormatDate([Recent Month]; "mmmm yyyy")
+
+20-Total $Amount Moved
+
+=[$Amount of Completed Send Transactions] + [$Amount of Received Transactions]
+
+
+21-
+
+=If IsNull([Month Year]) Then "Report Range: " 
+Else "Report Range: " + [Report Month Begin] + " - " + [Report Month End]
+
 
