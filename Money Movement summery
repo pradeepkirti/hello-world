@@ -1,4 +1,5 @@
 1-Document-Report Name
+change from sap bo expression to cognos analytics expression.
 
 =DocumentName() + " > " + ReportName()
 
@@ -6,25 +7,46 @@
 
 =Replace(UserResponse("Select Homes:");";";"; ")
 
+replace(UserResponse('Select Homes:'), ';', '; ')
+
+
 3-ReportFilter-Home
 
 =Replace(ReportFilter([Home Name - ID]);";";", "+Char(13)+Char(10))
+
+replace(ReportFilter([Home Name - ID]), ';', ', ' + chr(13) + chr(10))
+
 
 4-ReportFilter-ReportYearMonth
 
 =Replace(ReportFilter([Report Year Month]);";";", "+Char(13)+Char(10))
 
+replace(ReportFilter([Report Year Month]), ';', ', ' + chr(13) + chr(10))
+
+
 5-ReportFilter-UserCategory
 
 =Replace(ReportFilter([User Category]);";";", "+Char(13)+Char(10))
+
+replace(ReportFilter([User Category]), ';', ', ' + chr(13) + chr(10))
+
 
 6-Report Year Month
 
 =FormatDate([Month Begin Date]; "yyyy-MM")
 
+to_char([Month Begin Date], 'yyyy-MM')
+
+extract(year, [Month Begin Date]) + '-' + right('0' + cast(extract(month, [Month Begin Date]) as varchar(2)), 2)
+
+
 7- $Amount Received - On-Other
 
 =[$Amount of Received Transactions - On-Other]
+[Amount of Received Transactions - On-Other]
+
+[Amount of Received Transactions - On-Other] + 100  -- Example of adding a constant value
+
 
 8-$Amount Received - On-Us
 
