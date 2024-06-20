@@ -1577,3 +1577,18 @@ Case
 Then
 ([TN Transfer Count] + [TransferNow Activity - BOFA])
 End
+
+
+CASE 
+  WHEN ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date]) 
+    AND ([Mobile TransferNow Activity] = 'MOBILE')
+  THEN ([TN Transfer Count] + [TransferNow Activity - BOFA])
+END
+
+
+CASE 
+  WHEN ([Date] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date]) 
+    AND ([Mobile TransferNow Activity] = 'MOBILE')
+  THEN ([TN Transfer Count] + [TransferNow Activity - BOFA])
+END
+
