@@ -1593,3 +1593,13 @@ CASE
 END
 
 (Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ([Date TN] Between([Udf_Last 12 Months Start Date];[Udf_Last 12 Months End Date])))) In ([Home ID]))
+
+
+Sum(
+  CASE 
+    WHEN [Date TN] BETWEEN [Udf_Last 12 Months Start Date] AND [Udf_Last 12 Months End Date] 
+    THEN ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+    ELSE 0 
+  END
+  FOR [Home ID]
+)
