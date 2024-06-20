@@ -1569,3 +1569,11 @@ Outbound Dollars Transferred %-I
 +(([TransferNow Activity].[TN Transfer Amount] + [TransferNow Activity - BOFA].[TN Transfer Amount - BOFA]) Where (([Transfer Direction] = "Outbound") And (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])))))
 
 Outbound Dollars Transferred-I/(Outbound Dollars Transferred-I+Inbound Dollars Transferred-I)
+
+
+
+Case
+ When ([Date] Between ([Udf_Last 12 Months Start Date] And [Udf_Last 12 Months End Date])) And ([Mobile TransferNow Activity] = 'MOBILE')
+Then
+([TN Transfer Count] + [TransferNow Activity - BOFA])
+End
