@@ -173,3 +173,21 @@ count(
     then (1)
     else (NULL)
 )
+
+
+
+CASE
+    WHEN [Month Abbreviation] = 'JAN' THEN 'January'
+    WHEN [Month Abbreviation] = 'FEB' THEN 'February'
+    WHEN [Month Abbreviation] = 'MAR' THEN 'March'
+    WHEN [Month Abbreviation] = 'APR' THEN 'April'
+    WHEN [Month Abbreviation] = 'MAY' THEN 'May'
+    WHEN [Month Abbreviation] = 'JUN' THEN 'June'
+    WHEN [Month Abbreviation] = 'JUL' THEN 'July'
+    WHEN [Month Abbreviation] = 'AUG' THEN 'August'
+    WHEN [Month Abbreviation] = 'SEP' THEN 'September'
+    WHEN [Month Abbreviation] = 'OCT' THEN 'October'
+    WHEN [Month Abbreviation] = 'NOV' THEN 'November'
+    WHEN [Month Abbreviation] = 'DEC' THEN 'December'
+    ELSE 'Unknown'
+END + ' ' + [Year]
