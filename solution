@@ -211,3 +211,7 @@ END + ' ' + SUBSTR([Month Year], 5, 4)
 
 
 =RightTrim([First Name]) + " " + RightTrim([Middle Name]) + " " + RightTrim([Last Name])
+
+
+RTRIM([First Name]) + ' ' + RTRIM([Middle Name]) + ' ' + RTRIM([Last Name])
+
