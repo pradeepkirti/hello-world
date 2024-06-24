@@ -218,3 +218,9 @@ RTRIM([First Name]) + ' ' + RTRIM([Middle Name]) + ' ' + RTRIM([Last Name])
 =If Substr(ReportFilterSummary("User Send Activity by $Amount Range");542;237) = "<=$7.50, $7.51 to $15, $15.01 to $25, $25.01 to $50, $50.01 to $75, $75.01 to $100, $100.01 to $150, $150.01 to $200, $200.01 to $300, $300.01 to $500, $500.01 to $750, $750.01 to $1,000, $1,000.01 to $2,500, $2,500.01 to $5,000, >$5,000" 
 Then "All values" 
 Else Replace(ReportFilter([$Amount Range]);";";", "+Char(13)+Char(10))
+
+
+
+IF (SUBSTRING(ReportFilterSummary('User Send Activity by $Amount Range'), 542, 237) = '<=$7.50, $7.51 to $15, $15.01 to $25, $25.01 to $50, $50.01 to $75, $75.01 to $100, $100.01 to $150, $150.01 to $200, $200.01 to $300, $300.01 to $500, $500.01 to $750, $750.01 to $1,000, $1,000.01 to $2,500, $2,500.01 to $5,000, >$5,000')
+THEN 'All values'
+ELSE REPLACE(ReportFilter([$Amount Range]), ';', ', ' + Char(10))
