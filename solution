@@ -231,3 +231,30 @@ ELSE REPLACE(ReportFilter([$Amount Range]), ';', ', ' + Char(10))
 
 
 (Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]) And ([Transfer Speed] = "Instant")) In ([Transfer Speed]))
+
+total([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) 
+for ([TransferNow Activity].[Month Year TN] = _add_months(_first_of_month(current_date), 0) 
+and [TransferNow Activity].[Transfer Speed] = 'Instant')
+
+
+total(
+    [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+    for [Transfer Speed]
+) 
+within set (
+    filter (
+        [your dataset],
+        [TransferNow Activity].[Month Year TN] = _add_months(_first_of_month(current_date), 0) 
+        and [TransferNow Activity].[Transfer Speed] = 'Instant'
+    )
+)
+
+
+total(
+    if (
+        [TransferNow Activity].[Month Year TN] = _add_months(_first_of_month(current_date), 0) 
+        and [TransferNow Activity].[Transfer Speed] = 'Instant'
+    ) then (
+        [TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]
+    ) else (0)
+) for [Transfer Speed]
