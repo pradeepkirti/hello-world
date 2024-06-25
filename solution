@@ -229,3 +229,5 @@ ELSE REPLACE(ReportFilter([$Amount Range]), ';', ', ' + Char(10))
 
 ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month])  And ([Transfer Speed] = "Instant"))
 
+
+(Sum(([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])) Where ((FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]) And ([Transfer Speed] = "Instant")) In ([Transfer Speed]))
