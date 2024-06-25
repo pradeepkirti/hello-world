@@ -275,3 +275,15 @@ CASE
     THEN count([TN Transfer Count] for [Transfer Speed])  + count([TN Transfer Count - BOFA] for [Transfer Speed])
     ELSE 0 
   END
+
+
+
+total(
+    if (
+        [Date] between [Udf_Last 12 Months Start Date] and [Udf_Last 12 Months End Date]
+        and [Transfer Speed] = 'Instant'
+    ) then (
+        [TN Transfer Count] + [TN Transfer Count - BOFA]
+    ) else (0)
+)
+
