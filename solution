@@ -287,3 +287,4 @@ total(
     ) else (0)
 )
 
+'For' + (to_char(CurrentDate,-1),'Mmmm dd, yyyy')
