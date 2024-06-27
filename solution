@@ -288,3 +288,6 @@ total(
 )
 
 'For' + (to_char(CurrentDate,-1),'Mmmm dd, yyyy')
+
+'For ' + cast(current_date, 'MMMM dd, yyyy')
+
