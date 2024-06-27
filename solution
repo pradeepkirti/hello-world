@@ -291,3 +291,6 @@ total(
 
 'For ' + cast(current_date, 'MMMM dd, yyyy')
 ="For  " + FormatDate(RelativeDate(CurrentDate();-1);"Mmmm dd, yyyy")
+
+'For ' + cast(_add_days(current_date, -1), 'MMMM dd, yyyy')
+
