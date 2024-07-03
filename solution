@@ -294,3 +294,5 @@ total(
 
 'For ' + cast(_add_days(current_date, -1), 'MMMM dd, yyyy')
 
+
+([$Amount Range] in ('All')  or ([$Amount Range] in (?P_AmountRange?))
