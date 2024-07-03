@@ -296,3 +296,10 @@ total(
 
 
 ([$Amount Range] in ('All')  or ([$Amount Range] in (?P_AmountRange?))
+
+
+(
+    (?P_AmountRange? = 'All')
+    OR
+    ([Your Data Item] in ?P_AmountRange?)
+)
