@@ -260,6 +260,44 @@ ID) = @Prompt(strClientID)
 
 =If IsNull([Processed Payment Count] Where ([Trans].[Media Category] = "Electronic")) Then 0 Else [Processed Payment Count] Where ([Trans].[Media Category] = "Electronic")
 
+
+CASE 
+  WHEN 
+    ISNULL((Total([Processed Payment Count] for [Trans].[Media Category] = 'Electronic')))
+  THEN 0 
+  ELSE 
+    (Total([Processed Payment Count] for [Trans].[Media Category] = 'Electronic'))
+END
+
+
+CASE 
+  WHEN 
+    ISNULL((Total([YourProcessedPaymentCountColumn] for [YourTransMediaCategoryColumn] = 'Electronic')))
+  THEN 0 
+  ELSE 
+    (Total([YourProcessedPaymentCountColumn] for [YourTransMediaCategoryColumn] = 'Electronic'))
+END
+
+
 =If IsNull([Processed Payment Count] Where ([Trans].[Media Category] = "Paper")) Then 0 Else [Processed Payment Count] Where ([Trans].[Media Category] = "Paper")
 
+
+CASE 
+  WHEN COALESCE(Total([Processed Payment Count] for [Trans].[Media Category] = 'Paper'), 0) = 0 
+  THEN 0 
+  ELSE Total([Processed Payment Count] for [Trans].[Media Category] = 'Paper')
+END
+
+
+COALESCE(
+  Total([Processed Payment Count] for [Trans].[Media Category] = 'Paper'), 
+  0
+)
+
+
 =If IsNull([Processed Payment Count]) Then 0 Else [Processed Payment Count]
+
+
+
+COALESCE([Processed Payment Count], 0)
+
