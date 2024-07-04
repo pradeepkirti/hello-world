@@ -251,3 +251,5 @@ total(([TransferNow Activity - BOFA].[TN Transfer Count - BOFA] for ([Transfer D
 
 total(([TransferNow Activity].[TN Transfer Count] for ([Transfer Direction] = 'Inbound' AND [Date TN] between ?[Udf_Last 12 Months Start Date]? and ?[Udf_Last 12 Months End Date]?)), [TransferNow Activity - BOFA].[TN Transfer Count - BOFA] for ([Transfer Direction] = 'Inbound' AND [Date TN] between ?[Udf_Last 12 Months Start Date]? and ?[Udf_Last 12 Months End Date]?))
 
+	@Prompt(strClientID) = '-1' OR @Select(Sponsor\Sponsor
+ID) = @Prompt(strClientID)
