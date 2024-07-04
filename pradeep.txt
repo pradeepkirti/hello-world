@@ -23,6 +23,10 @@ END
 
 3-Udf_L12M Start Month End Date
 
+
+	@Prompt(strClientID) = '-1' OR @Select(Sponsor\Sponsor
+ID) = @Prompt(strClientID)
+
 =LastDayOfMonth(RelativeDate(ToDate(UserResponse("Select Reporting Month Begin Date");"");-11;MonthPeriod))
 
 
