@@ -253,3 +253,7 @@ total(([TransferNow Activity].[TN Transfer Count] for ([Transfer Direction] = 'I
 
 	@Prompt(strClientID) = '-1' OR @Select(Sponsor\Sponsor
 ID) = @Prompt(strClientID)
+
+
+#prompt('strClientID')# = '-1' OR [Sponsor].[Sponsor ID] = #prompt('strClientID')#
+
