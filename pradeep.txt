@@ -257,3 +257,9 @@ ID) = @Prompt(strClientID)
 
 #prompt('strClientID')# = '-1' OR [Sponsor].[Sponsor ID] = #prompt('strClientID')#
 
+
+=If IsNull([Processed Payment Count] Where ([Trans].[Media Category] = "Electronic")) Then 0 Else [Processed Payment Count] Where ([Trans].[Media Category] = "Electronic")
+
+=If IsNull([Processed Payment Count] Where ([Trans].[Media Category] = "Paper")) Then 0 Else [Processed Payment Count] Where ([Trans].[Media Category] = "Paper")
+
+=If IsNull([Processed Payment Count]) Then 0 Else [Processed Payment Count]
