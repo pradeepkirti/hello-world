@@ -304,3 +304,13 @@ XQE-PLN-0229 This query is not supported, because it only contains dimension ite
 
 COALESCE([Processed Payment Count], 0)
 
+
+@Select(Calendar\Date) BETWEEN CASE
+WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN
+date_trunc('month', date_trunc('month', current_date)-1)
+ELSE date_trunc('month', date_trunc('month',
+@Prompt(dtRunDate))-1) END AND CASE WHEN
+@Prompt(dtRunDate) = '9999-12-31 00:00:00'
+THEN date_trunc('month', current_date)-1 ELSE
+date_trunc('month', @Prompt(dtRunDate))-1 END
+
