@@ -298,6 +298,9 @@ COALESCE(
 =If IsNull([Processed Payment Count]) Then 0 Else [Processed Payment Count]
 
 
+XQE-PLN-0229 This query is not supported, because it only contains dimension items and there is no single fact stream that covers all of the entities. The involved fact tables are: SPSR_ORG_RPT( VW_ORG_RPT), VW_DLY_PRCSD_PYMT_FACT, VW_PYMT, VW_SBSPNLESS_PYMT. Resolve this issue by adding one or more fact items to the query. RSV-SRV-0042 Trace back: 
+
+
 
 COALESCE([Processed Payment Count], 0)
 
