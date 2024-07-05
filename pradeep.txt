@@ -333,3 +333,8 @@ CASE
 END
 
 =If IsError([Total Transaction]/[udf_Business Days]) Then 0 Else [Total Transaction]/[udf_Business Days]
+
+
+if ([udf_Business Days] = 0 or [udf_Business Days] is null) then (0)
+else ([Total Transaction] / [udf_Business Days])
+
