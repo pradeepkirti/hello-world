@@ -320,3 +320,8 @@ month' AND date_trunc('month', @Prompt(dtRunDate))
 
 (((([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
 
+if (formatDate([Month Year TN], 'MMM-yy') = [Udf_This Month])
+then ([TransferNow Activity].[TN Transfer Count] + [TransferNow Activity - BOFA].[TN Transfer Count - BOFA])
+else 0
+
+
