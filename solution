@@ -317,3 +317,6 @@ month' AND date_trunc('month', @Prompt(dtRunDate))
 
 [ADMIN.VW_DATE_DIM.MO_BGN_DT] between _add_months(_first_of_month(?dtRunDate?), -23) and _first_of_month(?dtRunDate?)
 
+
+(((([TransferNow Activity].[TN Transfer Count]+[TransferNow Activity - BOFA].[TN Transfer Count - BOFA]) Where (FormatDate([Month Year TN];"Mmm-yy") = [Udf_This Month]))
+
