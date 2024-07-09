@@ -314,3 +314,6 @@ ADMIN.VW_DATE_DIM.MO_BGN_DT BETWEEN
 date_trunc('month', @Prompt(dtRunDate)) + interval '-23
 month' AND date_trunc('month', @Prompt(dtRunDate))
 
+
+[ADMIN.VW_DATE_DIM.MO_BGN_DT] between _add_months(_first_of_month(?dtRunDate?), -23) and _first_of_month(?dtRunDate?)
+
