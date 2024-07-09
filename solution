@@ -330,3 +330,9 @@ else 0
 CASE WHEN @Select(Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year) = -3 THEN 'Missing' WHEN @Select(Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year) = -2 THEN 'Business - N/A' WHEN @Select(Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year) = -1 THEN 'Invalid' ELSE @Select(Subscriber\Subscriber Age & Birth Year \Subscriber Birth Year)::VARCHAR(30) END
  
 CASE WHEN [Database Layer].[VW_CQ_SSA_SBSR].[SBSR_BIRTH_YEAR_NBR] =-3  THEN 'Missing' WHEN [Database Layer].[VW_CQ_SSA_SBSR].[SBSR_BIRTH_YEAR_NBR] =-2 THEN 'Business - N/A' WHEN [Database Layer].[VW_CQ_SSA_SBSR].[SBSR_BIRTH_YEAR_NBR] =-1 THEN 'Invalid' ELSE [Database Layer].[VW_CQ_SSA_SBSR].[SBSR_BIRTH_YEAR_NBR] ::VARCHAR(30) END
+CASE 
+    WHEN [Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year] = -3 THEN 'Missing' 
+    WHEN [Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year] = -2 THEN 'Business - N/A' 
+    WHEN [Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year] = -1 THEN 'Invalid' 
+    ELSE CAST([Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year] AS VARCHAR(30)) 
+END
