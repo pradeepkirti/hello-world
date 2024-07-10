@@ -24,6 +24,16 @@ END
 3-Udf_L12M Start Month End Date
 
 
+
+154060
+
+
+
+
+
+RSV-VAL-0010 Failed to load the report specification. XQE-PLN-0229 This query is not supported, because it only contains dimension items and there is no single fact stream that covers all of the entities. The involved fact tables are: SPSR_ORG_RPT( VW_ORG_RPT), VW_CQ_MTHLY_PRCSD_PYMT_SLA_PA, VW_CQ_MTHLY_SPSR_INCDNT_PYMT, VW_DLY_CORP_CHK_ACTY_FACT, VW_DLY_PRCSD_CARD_FNDG_PYMT_FACT, VW_DLY_PRCSD_PYMT_FACT, VW_DLY_SPSR_CARD_FUND_FREQ_PYMT_FACT, VW_MTHLY_PYMT_REAL_TM_SMRY, VW_PYMT, VW_SBSPNLESS_PYMT, VW_TENANT_SRVC_UI_CONFIG. Resolve this issue by adding one or more fact items to the query. 
+
+
 	@Prompt(strClientID) = '-1' OR @Select(Sponsor\Sponsor
 ID) = @Prompt(strClientID)
 
@@ -338,3 +348,6 @@ END
 if ([udf_Business Days] = 0 or [udf_Business Days] is null) then (0)
 else ([Total Transaction] / [udf_Business Days])
 
+
+
+RSV-VAL-0010 Failed to load the report specification. XQE-PLN-0229 This query is not supported, because it only contains dimension items and there is no single fact stream that covers all of the entities. The involved fact tables are: SPSR_ORG_RPT( VW_ORG_RPT), VW_CQ_MTHLY_PRCSD_PYMT_SLA_PA, VW_CQ_MTHLY_SPSR_INCDNT_PYMT, VW_DLY_CORP_CHK_ACTY_FACT, VW_DLY_PRCSD_CARD_FNDG_PYMT_FACT, VW_DLY_PRCSD_PYMT_FACT, VW_DLY_SPSR_CARD_FUND_FREQ_PYMT_FACT, VW_MTHLY_PYMT_REAL_TM_SMRY, VW_PYMT, VW_SBSPNLESS_PYMT, VW_TENANT_SRVC_UI_CONFIG. Resolve this issue by adding one or more fact items to the query. 
