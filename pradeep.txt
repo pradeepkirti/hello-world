@@ -364,3 +364,11 @@ IF ([IncidentDaysBetween] = 0) THEN
     (  (?pStart_date?) )
 ELSE 
     ( to_char(?pStart_date?,'M/d/yyyy') + '-' +to_char(?pEnd_date?,'M/d/yyyy') )
+
+CASE
+    WHEN ([IncidentDaysBetween] = 0) THEN 
+        ( [pStart_date] )
+    ELSE 
+        ( to_char([pStart_date], 'M/D/YYYY') || '-' || to_char([pEnd_date], 'M/D/YYYY') )
+END
+
