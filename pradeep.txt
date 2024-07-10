@@ -25,6 +25,13 @@ END
 
 
 
+IF ([IncidentDaysBetween] = 0) THEN
+    (  (?pStart_date?) )
+ELSE 
+    ( to_char(?pStart_date?,'M/d/yyyy') + '-' +to_char(?pEnd_date?,'M/d/yyyy') )
+
+
+
 154060
 
 
