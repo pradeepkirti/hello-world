@@ -21,6 +21,12 @@ ReportFilter-DormantPeriod
 Has Transacted
 
 =If IsNull([Last Send Date]) And IsNull([Last Received Money Date]) And IsNull([Last Request-to-Pay Sent Date])
+
+
+
+substring(cast([OrderDate], varchar(10)), 9, 2) + '-' + substring(cast([OrderDate], varchar(10)), 6, 2) + '-' + substring(cast([OrderDate], varchar(10)), 1, 4)
+format([OrderDate], 'MMM dd, yyyy')
+
 Then "No"
 Else "Yes"
 
