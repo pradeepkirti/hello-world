@@ -342,3 +342,10 @@ CASE
     WHEN [Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year] = -1 THEN 'Invalid' 
     ELSE CAST([Subscriber\Subscriber Age & Birth Year\Subscriber Birth Year] AS VARCHAR(30)) 
 END
+
+
+
+
+format([OrderDate], 'MMM dd, yyyy')
+substring(cast([OrderDate], varchar(10)), 9, 2) + '-' + substring(cast([OrderDate], varchar(10)), 6, 2) + '-' + substring(cast([OrderDate], varchar(10)), 1, 4)
+
