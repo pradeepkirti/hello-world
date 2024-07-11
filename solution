@@ -349,3 +349,8 @@ END
 format([OrderDate], 'MMM dd, yyyy')
 substring(cast([OrderDate], varchar(10)), 9, 2) + '-' + substring(cast([OrderDate], varchar(10)), 6, 2) + '-' + substring(cast([OrderDate], varchar(10)), 1, 4)
 
+substring(cast([OrderDate], varchar(10)), 6, 2) 
++ '/' + 
+substring(cast([OrderDate], varchar(10)), 9, 2) 
++ '/' + 
+substring(cast([OrderDate], varchar(10)), 1, 4)
