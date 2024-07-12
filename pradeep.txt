@@ -372,3 +372,9 @@ CASE
         ( to_char([pStart_date], 'M/D/YYYY') || '-' || to_char([pEnd_date], 'M/D/YYYY') )
 END
 
+[DataItem] in ([ValueList]) 
+and [Index] <= (count([ValueList])/2)
+
+
+[DataItem] in ([ValueList]) 
+and [Index] > (count([ValueList])/2)
