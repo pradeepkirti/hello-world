@@ -379,3 +379,15 @@ when ([Last KTP Send Money Date] <[Last Send Money Date (Non-KTP)]) then to_char
 
 else to_char([Last KTP Send Money Date],'MM/DD/YYYY')
 end
+
+
+CASE 
+    WHEN [Last Send Money Date (Non-KTP)] IS NULL THEN 
+        cast([Last KTP Send Money Date], 'MM/DD/YYYY')
+    WHEN [Last KTP Send Money Date] IS NULL THEN 
+        cast([Last Send Money Date (Non-KTP)], 'MM/DD/YYYY')
+    WHEN ([Last KTP Send Money Date] < [Last Send Money Date (Non-KTP)]) THEN 
+        cast([Last Send Money Date (Non-KTP)], 'MM/DD/YYYY')
+    ELSE 
+        cast([Last KTP Send Money Date], 'MM/DD/YYYY')
+END
