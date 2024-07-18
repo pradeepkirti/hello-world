@@ -354,3 +354,17 @@ substring(cast([OrderDate], varchar(10)), 6, 2)
 substring(cast([OrderDate], varchar(10)), 9, 2) 
 + '/' + 
 substring(cast([OrderDate], varchar(10)), 1, 4)
+
+
+
+(
+    ?p_DateFilter? = 'ALL'
+    OR
+    (?p_DateFilter? = 'Yes' AND ([Last send date] IS NOT NULL OR [Last received date] IS NOT NULL OR [Last request date] IS NOT NULL))
+    OR
+    (?p_DateFilter? = 'No' AND ([Last send date] IS NULL AND [Last received date] IS NULL AND [Last request date] IS NULL))
+)
+CASE
+  WHEN ([Last send date] IS NOT NULL OR [Last received date] IS NOT NULL OR [Last request date] IS NOT NULL) THEN 'Yes'
+  ELSE 'No'
+END
