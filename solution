@@ -368,3 +368,14 @@ CASE
   WHEN ([Last send date] IS NOT NULL OR [Last received date] IS NOT NULL OR [Last request date] IS NOT NULL) THEN 'Yes'
   ELSE 'No'
 END
+
+
+case 
+when [Last Send Money Date (Non-KTP)] is null then to_char([Last KTP Send Money Date],'MM/DD/YYYY')
+
+when [Last KTP Send Money Date] is null then to_char([Last Send Money Date (Non-KTP)],'MM/DD/YYYY')
+
+when ([Last KTP Send Money Date] <[Last Send Money Date (Non-KTP)]) then to_char([Last Send Money Date (Non-KTP)],'MM/DD/YYYY')
+
+else to_char([Last KTP Send Money Date],'MM/DD/YYYY')
+end
