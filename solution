@@ -391,3 +391,7 @@ CASE
     ELSE 
         cast([Last KTP Send Money Date], 'MM/DD/YYYY')
 END
+
+
+(CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(@Prompt(dtRunDate)) -( TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-2 ) END)  - date(A.CHK_CRTE_DT) AS CALENDAR_DAYS_OLD
