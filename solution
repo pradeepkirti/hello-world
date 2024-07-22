@@ -402,3 +402,107 @@ CASE WHEN @Prompt('dtRunDate', 'D', 'Enter Date:', 'Date Format:', ATTRIBUTE(dtR
      THEN CURRENT_DATE - (DAY_OF_WEEK(CURRENT_DATE) - 2)
      ELSE TIMESTAMP(@Prompt('dtRunDate', 'D', 'Enter Date:', 'Date Format:', ATTRIBUTE(dtRunDate))) - (DAY_OF_WEEK(TIMESTAMP(@Prompt('dtRunDate', 'D', 'Enter Date:', 'Date Format:', ATTRIBUTE(dtRunDate)))) - 2)
 END - A.CHK_CRTE_DT AS CALENDAR_DAYS_OLD
+
+---------------------------------------------------
+
+
+
+ SELECT DISTINCT A.SRC_ID			
+,      date(A.CHK_CRTE_DT)			
+,      A.CHK_NBR			
+,      A.CHK_AMT			
+,      F.SBSPN_PYEE_FULL_NM 			
+,      (CASE WHEN F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT = '' THEN '' ELSE ('*'||F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT)END)				
+,      (CASE WHEN D.LGCY_REM_CTR_NBR > 0 THEN D.LGCY_REM_CTR_NBR ELSE 0 END) LGCY_REM_CTR_NBR			
+,      A.CSMR_ID			
+,      (RTRIM(H.FIRST_NM)||' '|| RTRIM(H.LAST_NM)) CONSUMER_NAM			
+,      I.SBSPN_STAT_NM			
+,      (CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(@Prompt(dtRunDate)) -( TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-2 ) END)  - date(A.CHK_CRTE_DT) AS CALENDAR_DAYS_OLD			
+,      SUM(J.CKFR_BSNS_DAY_IND) AS BUSINESS_DAYS_OLD			
+,      T1.SPSR_NM 			
+,      'Fiserv'			
+,      'CONFIDENTIAL'			
+,      'Custom SQL' 
+
+FROM 			
+		(SELECT B.LGCY_SPSR_ID	
+                ,       B.SPSR_ORG_INDV_ID			
+                ,       C.BSNS_NM AS SPSR_NM 			
+  		FROM     PM_DEV_DWS.DW.VW_ORG_RPT A 	
+  		JOIN     PM_DEV_DWS.DW.VW_SPSR B 	
+ 		ON B.SPSR_ORG_INDV_ID = A.ORG_INDV_ID 	
+ 		JOIN     PM_DEV_DWS.DW.VW_ORG C 	
+  		ON C.ORG_INDV_ID = B.SPSR_ORG_INDV_ID 	
+  		JOIN     PM_DEV_DWS.DW.VW_RPT D 	
+  		ON D.RPT_ID = A.RPT_ID 	
+  		WHERE D.LGCY_RPT_ID = @Prompt('Enter a Report ID','N',,Mono,Free,Not_Persistent,,User:-1) 
+      and (  @Prompt(strClientID) = '-1' OR ( B.LGCY_SPSR_ID ) =  @Prompt(strClientID)  )			
+  		AND B.SPSR_ORG_INDV_ID = A.ORG_INDV_ID 	
+  		) AS T1 	
+			
+  JOIN     PM_DEV_DWS.DW.VW_CORP_CHK_RCNCL AS A 			
+  ON T1.LGCY_SPSR_ID = A.SRC_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_CR_TRN_REMIT AS B 			
+  ON A.SRC_ID = B.SRC_ID 			
+  AND A.CSMR_ID = B.CSMR_ID 			
+  AND A.REMIT_CTR_PYMT_TRK_ID = B.REMIT_CTR_PYMT_TRK_ID 			
+  AND A.PAY_HIST_ADD_TMS = B.PAY_HIST_ADD_TMS 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_MEDIA_TYPE AS C 			
+  ON B.MEDIA_TYPE_ID = C.MEDIA_TYPE_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_REM_CTR AS D 			
+  ON A.REMIT_CTR_ORG_ID = D.RC_ORG_INDV_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_SBSPN AS G 			
+  ON A.CSMR_ID = G.LGCY_SBSR_ID 			
+  AND A.SRC_ID = G.LGCY_SPSR_ID 			
+  AND T1.LGCY_SPSR_ID = G.LGCY_SPSR_ID 			
+  AND T1.SPSR_ORG_INDV_ID = G.ORG_INDV_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_PYMT AS E 			
+  ON A.LGCY_SRVR_TRN_TMS = E.LGCY_TMS 			
+  AND G.SBSPN_ID = E.SBSPN_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_SBSPN_PYEE AS F 			
+  ON E.SBSPN_PYEE_ID = F.SBSPN_PYEE_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_PERS AS H 			
+  ON G.SBSR_PERS_INDV_ID = H.PERS_INDV_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_SBSPN_STAT AS I 			
+  ON G.SBSPN_STAT_ID = I.SBSPN_STAT_ID 			
+  			
+JOIN     PM_DEV_DWS.DW.VW_DATE_DIM AS J 			
+  ON J.DATE_DIM_ID >= A.CHK_CRTE_DT 			
+  AND J.DATE_DIM_ID < CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1 )
+  ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1)  END 			
+ 			
+  WHERE 1=1 			
+			
+  AND (A.SRC_ID = '' OR A.SRC_ID = T1.LGCY_SPSR_ID) 			
+  AND A.SRC_ID <> '' 			
+  AND A.CHK_STAT_IND = 'N' 			
+			
+  AND A.CHK_CRTE_DT <=  CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1)  -20 			
+   ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1) - 20   END    			
+  AND A.CHK_CRTE_DT >= CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1) -90  			
+   ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1) - 90   END			
+			
+  AND (A.CHK_RCNCL_DT IS NULL OR A.CHK_RCNCL_DT >= CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1) 			
+   ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1) END   ) 			
+  AND B.MEDIA_TYPE_ID = 3 			
+  			
+GROUP BY A.SRC_ID, date(A.CHK_CRTE_DT), A.CHK_NBR, A.CHK_AMT, F.SBSPN_PYEE_FULL_NM, F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT, 			
+  (CASE WHEN D.LGCY_REM_CTR_NBR > 0 THEN D.LGCY_REM_CTR_NBR ELSE 0 END), A.CSMR_ID, 			
+  (RTRIM(H.FIRST_NM)||' '|| RTRIM(H.LAST_NM)),			
+  I.SBSPN_STAT_NM, 			
+ (CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(@Prompt(dtRunDate)) -( TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-2 ) END)  - date(A.CHK_CRTE_DT), 		
+  T1.SPSR_NM ,      			
+  'Fiserv'			
+,      'CONFIDENTIAL'			
+,      'Custom SQL'			
+
