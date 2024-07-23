@@ -24,6 +24,21 @@ END
 3-Udf_L12M Start Month End Date
 
 
+-----------------------------------------------------------
+
+
+(Date ) BETWEEN
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', date_trunc('month', current_date)-1) ELSE date_trunc('month', date_trunc('month', @Prompt(dtRunDate))-1)  END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', current_date)-1 ELSE date_trunc('month', @Prompt(dtRunDate))-1 END  )
+
+
+BLR_RPT.LGCY_RPT_ID  =  @Prompt('Enter a Report ID','N',,Mono,Free,Not_Persistent,,User:-1)
+
+
+( @Prompt(strClientID) = '-1'
+OR
+( rtrim(ADMIN.VW_BILLER_ORG.LGCY_BLR_ID) ) = @Prompt(strClientID)  )
+
+
 
 SELECT DISTINCT
     A.SRC_ID,
