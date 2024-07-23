@@ -642,3 +642,11 @@ if totext({?psdtRunDate}, "MMMM, yyyy") = "December, 9999" then
 	totext(dateadd("M", -1, currentdate),"MMMM, yyyy")
 else
 	totext(dateadd("M", -1,{?psdtRunDate}), "MMMM, yyyy")
+
+
+
+CASE
+  WHEN to_char(?psdtRunDate?, 'Month, YYYY') = 'December, 9999'
+  THEN to_char(add_months(current_date, -1), 'Month, YYYY')
+  ELSE to_char(add_months(?psdtRunDate?, -1), 'Month, YYYY')
+END
