@@ -619,3 +619,22 @@ BLR_RPT.LGCY_RPT_ID  =  @Prompt('Enter a Report ID','N',,Mono,Free,Not_Persisten
 OR
 ( rtrim(ADMIN.VW_BILLER_ORG.LGCY_BLR_ID) ) = @Prompt(strClientID)  )
 
+([Date] BETWEEN 
+   (CASE 
+      WHEN ?dtRunDate? = '9999-12-31 00:00:00' 
+      THEN _add_months(_add_months(current_date,-1),1) 
+      ELSE _add_months(?dtRunDate?,-1) 
+    END)
+   AND
+   (CASE 
+      WHEN ?dtRunDate? = '9999-12-31 00:00:00' 
+      THEN _add_months(current_date,-1) 
+      ELSE _add_months(?dtRunDate?,-1) 
+    END)
+)
+
+[BLR_RPT].[LGCY_RPT_ID] = ?prmReportID?
+
+
+(?prmClientID? = '-1' OR trim([ADMIN].[VW_BILLER_ORG].[LGCY_BLR_ID]) = ?prmClientID?)
+
