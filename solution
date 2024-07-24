@@ -530,3 +530,20 @@ case
   else 
     to_char(?dtRunDate? - 2 days, 'MMDDYYYY')
 end
+
+
+"For " +
+if totext({?psdtRunDate},"MMyyyy") = "129999" then
+	totext(dateadd("d", -2, currentdate()),"MMMM dd, yyyy")
+else
+	totext(dateadd("d", -2, {?psdtRunDate}),"MMMM dd, yyyy")
+
+
+
+mid(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}),1,4)+
+mid(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}),5,2)+
+mid(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}),7,2)
+
+
+
+"For: " + trim({EDW_Client_Connect.Sponsor\Sponsor}) + " (" + trim({EDW_Client_Connect.Sponsor\Sponsor ID}) + ")"
