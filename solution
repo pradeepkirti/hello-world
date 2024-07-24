@@ -547,3 +547,21 @@ mid(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}),7,2)
 
 
 "For: " + trim({EDW_Client_Connect.Sponsor\Sponsor}) + " (" + trim({EDW_Client_Connect.Sponsor\Sponsor ID}) + ")"
+
+
+"For " || 
+case
+    when to_char(?psdtRunDate?, 'MMyyyy') = '129999' then
+        to_char(current_date - 2 day, 'MMMM dd, yyyy')
+    else
+        to_char(?psdtRunDate? - 2 day, 'MMMM dd, yyyy')
+end
+
+
+substr(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}), 1, 4) ||
+substr(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}), 5, 2) ||
+substr(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}), 7, 2)
+
+
+'For: ' || trim([EDW_Client_Connect].[Sponsor].[Sponsor]) || ' (' || trim([EDW_Client_Connect].[Sponsor].[Sponsor ID]) || ')'
+
