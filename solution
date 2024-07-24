@@ -24,6 +24,14 @@ Has Transacted
 
 
 
+	substr( rtrim(ltrim( DW.VW_INCDNT_EVNT.
+PS_INCDNT_ID) ) , 1, 4 ) || '20' || substr( rtrim(ltrim(DW.
+VW_INCDNT_EVNT.PS_INCDNT_ID ) ) , 5, 2 )= CASE
+WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN
+TO_CHAR(current_date + interval '-2 days','MMDDYYYY')
+ELSE TO_CHAR(@Prompt(dtRunDate) + interval '-2
+days','MMDDYYYY') end
+
 substring(cast([OrderDate], varchar(10)), 9, 2) + '-' + substring(cast([OrderDate], varchar(10)), 6, 2) + '-' + substring(cast([OrderDate], varchar(10)), 1, 4)
 format([OrderDate], 'MMM dd, yyyy')
 
