@@ -521,3 +521,12 @@ WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN
 TO_CHAR(current_date + interval '-2 days','MMDDYYYY')
 ELSE TO_CHAR(@Prompt(dtRunDate) + interval '-2
 days','MMDDYYYY') end
+
+
+substr( trim( leading ' ' from trim( trailing ' ' from DW.VW_INCDNT_EVNT.PS_INCDNT_ID ) ), 1, 4 ) || '20' || substr( trim( leading ' ' from trim( trailing ' ' from DW.VW_INCDNT_EVNT.PS_INCDNT_ID ) ), 5, 2 ) = 
+case
+  when ?dtRunDate? = '9999-12-31 00:00:00' then 
+    to_char(current_date - 2 days, 'MMDDYYYY')
+  else 
+    to_char(?dtRunDate? - 2 days, 'MMDDYYYY')
+end
