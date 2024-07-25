@@ -578,3 +578,19 @@ ELSE next_day(@Prompt(dtRunDate),'MONDAY')
 + interval '-14 days') + interval '6 days' ELSE
 (next_day(@Prompt(dtRunDate),'MONDAY') + interval '-14
 days') + interval '6 days' END
+
+
+PAM.VW_DLY_PRCSD_PYMT_FACT.PRCS_DUE_DT BETWEEN 
+CASE 
+    WHEN ?dtRunDate? = '9999-12-31 00:00:00' THEN 
+        _next_of_week(current_date, 'Monday') - 14 DAYS
+    ELSE 
+        _next_of_week(?dtRunDate?, 'Monday') - 14 DAYS
+END
+AND 
+CASE 
+    WHEN ?dtRunDate? = '9999-12-31 00:00:00' THEN 
+        (_next_of_week(current_date, 'Monday') - 14 DAYS) + 6 DAYS
+    ELSE 
+        (_next_of_week(?dtRunDate?, 'Monday') - 14 DAYS) + 6 DAYS
+END
