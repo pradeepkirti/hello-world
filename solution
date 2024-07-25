@@ -633,3 +633,12 @@ if totext({?psdtRunDate}, "yyyy-MM-dd") = "9999-12-31" then
 	totext(dateadd("d", -1, currentdate), "yyyy-MM-dd") + ")"
 else
 	totext(dateadd("d", -1, {?psdtRunDate}), "yyyy-MM-dd") + ")"
+
+
+'Month-To-Date (Cases Closed as of ' || 
+    ( 
+        if [#prompt('psdtRunDate','date')#] = '9999-12-31' 
+        then to_char(add_days(current_date, -1), 'YYYY-MM-DD') 
+        else to_char(add_days(#prompt('psdtRunDate','date')#, -1), 'YYYY-MM-DD') 
+    ) 
+    || ')'
