@@ -594,3 +594,12 @@ CASE
     ELSE 
         (_next_of_week(?dtRunDate?, 'Monday') - 14 DAYS) + 6 DAYS
 END
+
+
+@Select(Call Center / Case - Claim\Claim Lifecycle
+Summary\Claim End Timestamp) BETWEEN CASE
+WHEN @Prompt(?psdtRunDate?) = '9999-12-31 00:00:00'
+THEN DATE_TRUNC('Month',CURRENT_DATE) ELSE
+DATE_TRUNC('Month',@Prompt({?psdtRunDate?)) END AND
+CASE WHEN @Prompt(?psdtRunDate?) = '9999-12-31 00:00:00'
+THEN current_date ELSE @Prompt(?psdtRunDate?) END
