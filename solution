@@ -23,6 +23,16 @@ Has Transacted
 =If IsNull([Last Send Date]) And IsNull([Last Received Money Date]) And IsNull([Last Request-to-Pay Sent Date])
 
 
+'Month-To-Date (Cases Closed as of ' || 
+    ( 
+        if [#prompt('psdtRunDate','date')#] = '9999-12-31' 
+        then to_char(add_days(current_date, -1), 'YYYY-MM-DD') 
+        else to_char(add_days(#prompt('psdtRunDate','date')#, -1), 'YYYY-MM-DD') 
+    ) 
+    || ')'
+
+
+
 
 
 
