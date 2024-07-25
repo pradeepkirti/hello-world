@@ -24,6 +24,8 @@ Has Transacted
 
 
 
+
+
 	substr( rtrim(ltrim( DW.VW_INCDNT_EVNT.
 PS_INCDNT_ID) ) , 1, 4 ) || '20' || substr( rtrim(ltrim(DW.
 VW_INCDNT_EVNT.PS_INCDNT_ID ) ) , 5, 2 )= CASE
@@ -565,3 +567,14 @@ substr(trim({EDW_Client_Connect.Incident Event\Peoplesoft Incident ID}), 7, 2)
 
 'For: ' || trim([EDW_Client_Connect].[Sponsor].[Sponsor]) || ' (' || trim([EDW_Client_Connect].[Sponsor].[Sponsor ID]) || ')'
 
+PAM.VW_DLY_PRCSD_PYMT_FACT.
+PRCS_DUE_DT BETWEEN CASE WHEN
+@Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN
+next_day(current_date,'MONDAY') + interval '-14 days'
+ELSE next_day(@Prompt(dtRunDate),'MONDAY')
++ interval '-14 days' END AND CASE WHEN
+@Prompt(dtRunDate) = '9999-12-31 00:00:
+00' THEN (next_day(current_date,'MONDAY')
++ interval '-14 days') + interval '6 days' ELSE
+(next_day(@Prompt(dtRunDate),'MONDAY') + interval '-14
+days') + interval '6 days' END
