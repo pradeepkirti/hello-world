@@ -617,3 +617,9 @@ CASE
     THEN current_date 
     ELSE #prompt('psdtRunDate','date')# 
 END
+
+"Month-To-Date (Cases Closed as of " +
+if totext({?psdtRunDate}, "yyyy-MM-dd") = "9999-12-31" then
+	totext(dateadd("d", -1, currentdate), "yyyy-MM-dd") + ")"
+else
+	totext(dateadd("d", -1, {?psdtRunDate}), "yyyy-MM-dd") + ")"
