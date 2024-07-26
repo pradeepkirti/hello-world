@@ -653,3 +653,19 @@ else
 to_char(_add_months (cast(?psdtRunDate?,date),-1),'YYYY-MM-DD')
 
 end
+
+case
+  when [psdtRunDate] = '9999-12-31' then 
+    _add_months(current_date, -1)
+  else 
+    _add_months([psdtRunDate], -1)
+end
+
+
+case
+  when [psdtRunDate] = '9999-12-31' then 
+    format(_add_months(current_date, -1), 'YYYY-MM-DD')
+  else 
+    format(_add_months([psdtRunDate], -1), 'YYYY-MM-DD')
+end
+
