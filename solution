@@ -642,3 +642,14 @@ else
         else to_char(add_days(#prompt('psdtRunDate','date')#, -1), 'YYYY-MM-DD') 
     ) 
     || ')'
+
+
+case when ?psdtRunDate?='9999-12-31' then 
+
+to_char(_add_months (cast(current_date,date),-1),'YYYY-MM-DD')   
+
+else 
+
+to_char(_add_months (cast(?psdtRunDate?,date),-1),'YYYY-MM-DD')
+
+end
