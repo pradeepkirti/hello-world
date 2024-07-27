@@ -693,3 +693,16 @@ end
 (CASE WHEN F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT = '' THEN '' ELSE ('*'||F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT)END)
 
 (CASE WHEN D.LGCY_REM_CTR_NBR > 0 THEN D.LGCY_REM_CTR_NBR ELSE 0 END)
+
+
+case
+    when [F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT] = '' then ''
+    else '*' + [F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT]
+end
+
+
+
+case
+    when [D.LGCY_REM_CTR_NBR] > 0 then [D.LGCY_REM_CTR_NBR]
+    else 0
+end
