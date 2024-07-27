@@ -690,3 +690,6 @@ case
     else
         _add_days(#prompt('dtRunDate')#, -((day_of_week(#prompt('dtRunDate')#) - 2)))
 end
+(CASE WHEN F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT = '' THEN '' ELSE ('*'||F.SBSPN_PYEE_ACCT_NBR_LAST4_TXT)END)
+
+(CASE WHEN D.LGCY_REM_CTR_NBR > 0 THEN D.LGCY_REM_CTR_NBR ELSE 0 END)
