@@ -23,6 +23,10 @@ Has Transacted
 =If IsNull([Last Send Date]) And IsNull([Last Received Money Date]) And IsNull([Last Request-to-Pay Sent Date])
 
 
+
+CASE WHEN #Prompt('dtRunDate')# = '9999-12-31' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(#Prompt('dtRunDate')#) -( TO_NUMBER(TO_CHAR(TIMESTAMP(#Prompt('dtRunDate')#),'D'),'9')-2 ) END)
+
 'Month-To-Date (Cases Closed as of ' || 
     ( 
         if [#prompt('psdtRunDate','date')#] = '9999-12-31' 
@@ -672,3 +676,8 @@ end
 CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN DATE_TRUNC('Month',CURRENT_DATE)  ELSE  DATE_TRUNC('Month',@Prompt(dtRunDate)) END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN current_date ELSE  @Prompt(dtRunDate) END
 
 CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN DATE_TRUNC('Month',CURRENT_DATE)  ELSE  DATE_TRUNC('Month',@Prompt(dtRunDate)) END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN current_date ELSE  @Prompt(dtRunDate) END  )
+
+
+
+CASE WHEN #Prompt('dtRunDate')# = '9999-12-31' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(#Prompt('dtRunDate')#) -( TO_NUMBER(TO_CHAR(TIMESTAMP(#Prompt('dtRunDate')#),'D'),'9')-2 ) END)
