@@ -681,3 +681,12 @@ CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN DATE_TRUNC('Month',CUR
 
 CASE WHEN #Prompt('dtRunDate')# = '9999-12-31' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
         ELSE TIMESTAMP(#Prompt('dtRunDate')#) -( TO_NUMBER(TO_CHAR(TIMESTAMP(#Prompt('dtRunDate')#),'D'),'9')-2 ) END)
+
+
+
+case
+    when #prompt('dtRunDate')# = '9999-12-31' then
+        _add_days(current_date, -((day_of_week(current_date) - 2)))
+    else
+        _add_days(#prompt('dtRunDate')#, -((day_of_week(#prompt('dtRunDate')#) - 2)))
+end
