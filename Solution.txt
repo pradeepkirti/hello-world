@@ -267,3 +267,41 @@ CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NU
         ELSE TIMESTAMP(@Prompt(dtRunDate)) -( TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-2 ) END)
 
 
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - (DATE_PART('DOW', CURRENT_DATE) - 1)
+    ELSE TIMESTAMP_LTZ(@Prompt(dtRunDate)) - (DATE_PART('DOW', TIMESTAMP_LTZ(@Prompt(dtRunDate))) - 1)
+END
+
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - (DATE_PART('DOW', CURRENT_DATE) - 1)
+    ELSE TIMESTAMP_LTZ(@Prompt(dtRunDate)) - (DATE_PART('DOW', TIMESTAMP_LTZ(@Prompt(dtRunDate))) - 1)
+END
+
+
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - (DATE_PART('DOW', CURRENT_DATE) - 1) - INTERVAL '20 DAY'
+    ELSE TO_TIMESTAMP(@Prompt(dtRunDate)) - (DATE_PART('DOW', TO_TIMESTAMP(@Prompt(dtRunDate))) - 1) - INTERVAL '20 DAY'
+END
+
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - (DATE_PART('DOW', CURRENT_DATE) - 1) - INTERVAL '90 DAY'
+    ELSE TO_TIMESTAMP(@Prompt(dtRunDate)) - (DATE_PART('DOW', TO_TIMESTAMP(@Prompt(dtRunDate))) - 1) - INTERVAL '90 DAY'
+END
+
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - (DATE_PART('DOW', CURRENT_DATE) - 1)
+    ELSE TO_TIMESTAMP(@Prompt(dtRunDate)) - (DATE_PART('DOW', TO_TIMESTAMP(@Prompt(dtRunDate))) - 1)
+END
+
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - (DATE_PART('DOW', CURRENT_DATE) - 2)
+    ELSE TO_TIMESTAMP(@Prompt(dtRunDate)) - (DATE_PART('DOW', TO_TIMESTAMP(@Prompt(dtRunDate))) - 2)
+END
+
+
