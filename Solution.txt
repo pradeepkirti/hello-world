@@ -379,3 +379,11 @@ END
 + (IF ToText({?psdtRunDate}) = "12/31/99" 
 	then ToText(DateAdd("d",-Day(CurrentDate),CurrentDate),"MMMM, yyyy")				
 	else ToText(DateAdd("d",-Day({?psdtRunDate}),{?psdtRunDate}),"MMMM, yyyy"))
+
+
+CASE 
+    WHEN TO_CHAR({?psdtRunDate}, 'MM/DD/YY') = '12/31/99'
+    THEN TO_CHAR(CURRENT_DATE - EXTRACT(DAY FROM CURRENT_DATE) + INTERVAL '1 DAY', 'Month, YYYY')
+    ELSE TO_CHAR({?psdtRunDate} - EXTRACT(DAY FROM {?psdtRunDate}) + INTERVAL '1 DAY', 'Month, YYYY')
+END
+
