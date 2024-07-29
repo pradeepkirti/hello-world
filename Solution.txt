@@ -372,3 +372,10 @@ CASE
     THEN DATE_TRUNC('MONTH', CURRENT_DATE()) - INTERVAL '1 DAY'
     ELSE DATE_TRUNC('MONTH', TO_DATE(@Prompt('dtRunDate'))) - INTERVAL '1 DAY'
 END
+
+
+"For " 
+
++ (IF ToText({?psdtRunDate}) = "12/31/99" 
+	then ToText(DateAdd("d",-Day(CurrentDate),CurrentDate),"MMMM, yyyy")				
+	else ToText(DateAdd("d",-Day({?psdtRunDate}),{?psdtRunDate}),"MMMM, yyyy"))
