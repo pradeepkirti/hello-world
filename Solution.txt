@@ -308,3 +308,10 @@ END
 TIMESTAMP_LTZ
 
 TO_TIMESTAMP
+
+Date
+
+if totext({?dtRunDate?}, "MMddyyyy") = "12319999" then
+	totext(dateadd("d", -(dayofweek(currentdate()-1)), currentdate()),"MMMM d, yyyy")
+else
+	totext(dateadd("d", -(dayofweek({?dtRunDate?})-1), {?dtRunDate?}),"MMMM d, yyyy")
