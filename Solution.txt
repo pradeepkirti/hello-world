@@ -22,6 +22,13 @@ END
 
 LASTDAY(
   RelativeDate(ToDate(PROMPT('Select Reporting Month Begin Date',.,'DD/MM/YYYY'), 'YYYY-MM-DD'), -12, 'M')
+
+CASE 
+    WHEN @Prompt('dtRunDate') = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE() - INTERVAL '1 DAY' 
+    ELSE TO_TIMESTAMP(@Prompt('dtRunDate')) - INTERVAL '1 DAY' 
+END
+
 )
 
 
