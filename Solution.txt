@@ -322,3 +322,11 @@ if to_char({?dtRunDate?}, 'MMDDYYYY') = '12319999' then
 else
     to_char(add_days({?dtRunDate?}, - (day_of_week({?dtRunDate?}) - 1)), 'MMMM D, YYYY')
 
+
+
+case 
+    when to_char({?dtRunDate?}, 'MMDDYYYY') = '12319999' then
+        to_char(add_days(current_date, - (day_of_week(current_date) - 1)), 'MMMM D, YYYY')
+    else
+        to_char(add_days({?dtRunDate?}, - (day_of_week({?dtRunDate?}) - 1)), 'MMMM D, YYYY')
+end
