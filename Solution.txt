@@ -330,3 +330,6 @@ case
     else
         to_char(add_days({?dtRunDate?}, - (day_of_week({?dtRunDate?}) - 1)), 'MMMM D, YYYY')
 end
+
+
+ CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN current_date + interval '-1 days' else @Prompt(dtRunDate) + interval '-1 days' end
