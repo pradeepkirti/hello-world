@@ -243,3 +243,27 @@ ELSE (
         )
     )
 )
+
+
+
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(@Prompt(dtRunDate)) -( TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-2 ) END)
+
+
+
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1 )
+  ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1)  END
+
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1)  -20 			
+   ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1) - 20   END
+
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1) -90  			
+   ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1) - 90   END
+
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN (CURRENT_DATE -  TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-1) 			
+   ELSE TIMESTAMP(@Prompt(dtRunDate)) - (TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-1) END   )
+
+(CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE -  (TO_NUMBER(TO_CHAR(Current_date, 'D'),'9')-2 ) 			
+        ELSE TIMESTAMP(@Prompt(dtRunDate)) -( TO_NUMBER(TO_CHAR(TIMESTAMP(@Prompt(dtRunDate)),'D'),'9')-2 ) END)
+
+
