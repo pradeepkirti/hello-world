@@ -194,3 +194,172 @@ CASE
     THEN CURRENT_DATE - DAYOFMONTH(CURRENT_DATE())
     ELSE DATEADD(day, -DAYOFMONTH(TO_TIMESTAMP(:dtRunDate)), TO_TIMESTAMP(:dtRunDate))
 END
+
+
+			
+with qMain as				
+(				
+SELECT SBSPN_ORG_RPT.ORG_INDV_ID				
+,      PM_DEV_DWS.DW.VW_PDCT_TYPE.pdct_type_id				
+,      dd.MO_END_DT				
+,      count(SBSPN_DW.LGCY_SBSR_ID) Enrollments				
+,      sum(case when FIRST_PYMT_SCHD_DT  is null then 0 else 1 end) as Activations				
+,      avg(  (( SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT )) - (( SBSPN_DW.ENRL_START_DT ))) as ad				
+,      stddev((  (date( SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT )) -(date( SBSPN_DW.ENRL_START_DT )))) as sd				
+				
+FROM PM_DEV_DWS.DW.VW_PDCT_TYPE				
+,    PM_DEV_DWS.COM.VW_SPSR_DIM S				
+,    PM_DEV_DWS.DW.VW_SBSPN_LIFECYC_SMRY  SBSPN_LIFECYC_SMRY				
+,    PM_DEV_DWS.DW.VW_SBSPN  SBSPN_DW				
+,    PM_DEV_DWS.DW.VW_RPT  SBSPN_RPT				
+,    PM_DEV_DWS.DW.VW_SBSPN_PDCT_VER pv				
+,    PM_DEV_DWS.DW.VW_PDCT_LINE				
+,    PM_DEV_DWS.DW.VW_ORG_RPT  SBSPN_ORG_RPT				
+,    PM_DEV_DWS.DW.VW_DATE_DIM dd 				
+				
+WHERE 1=1				
+and   dd.date_dim_id = SBSPN_DW.ENRL_START_DT				
+and   SBSPN_LIFECYC_SMRY.SBSPN_ID=SBSPN_DW.SBSPN_ID  				
+AND   SBSPN_DW.ORG_INDV_ID=SBSPN_LIFECYC_SMRY.SPSR_ORG_INDV_ID				
+and   SBSPN_LIFECYC_SMRY.SPSR_ORG_INDV_ID = SBSPN_DW.ORG_INDV_ID				
+AND   SBSPN_DW.ORG_INDV_ID=SBSPN_ORG_RPT.ORG_INDV_ID  				
+AND   SBSPN_ORG_RPT.RPT_ID=SBSPN_RPT.RPT_ID  				
+AND   pv.SBSPN_ID=SBSPN_DW.SBSPN_ID  				
+AND   S.SPSR_ORG_ID=SBSPN_ORG_RPT.ORG_INDV_ID				
+AND   PM_DEV_DWS.DW.VW_PDCT_LINE.PDCT_TYPE_ID=DW.VW_PDCT_TYPE.PDCT_TYPE_ID  				
+AND   pv.PDCT_LINE_ID=DW.VW_PDCT_LINE.PDCT_LINE_ID  				
+and   pv.EFF_START_DT = 				
+        (select min(eff_start_dt) from dw.vw_sbspn_pdct_ver Npv				
+        where Npv.src_tbl_nm = 'SBSR'				
+        and Npv.sbspn_id = SBSPN_DW.SBSPN_ID)				
+AND   SBSPN_RPT.LGCY_RPT_ID  =  #Prompt('Enter a Report ID','Int')# 				
+AND   SBSPN_DW.SBSPN_ID > 0 				
+AND   pv.SRC_TBL_NM='SBSR'  				
+AND ( #Prompt('strClientID','txt')# = '-1'	OR  s.LGCY_SPSR_ID = #Prompt('strClientID','txt')# )			
+AND   SBSPN_DW.ENRL_START_DT BETWEEN CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN DATEADD(month, -12, DATE_TRUNC('MONTH', CURRENT_DATE()))
+    ELSE DATEADD(month, -12, DATE_TRUNC('MONTH', cast(#Prompt('dtRunDate')# as date)))
+END AND CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN CURRENT_DATE - DAYOFMONTH(CURRENT_DATE())
+    ELSE DATEADD(day, -DAYOFMONTH(cast(#Prompt('dtRunDate')# as date)), cast(#Prompt('dtRunDate')# as date))
+END				
+group by SBSPN_ORG_RPT.ORG_INDV_ID				
+,        PM_DEV_DWS.DW.VW_PDCT_TYPE.pdct_type_id				
+,        dd.MO_END_DT				
+				
+)				
+				
+select s.LGCY_SPSR_ID				
+,      s.BSNS_NM				
+,      p.PDCT_TYPE_DSC				
+,      A.MO_END_DT   --Enrollment Date				
+,      coalesce(b.enrollments, 0) --Subscriber ID Enrollment Count				
+,      coalesce(b.activations, 0) --Subscriber ID Distinct Count				
+,      coalesce(b.ad, 0)          --Average Days to Payment Activation				
+--,      coalesce(b.sd, 0) --standard deviation				
+,      coalesce(c.medays, 0)      --Days to Payment Activation				
+,      'Fiserv'				
+,      'Custom SQL'				
+from  				
+        (select DISTINCT ORG_INDV_ID, PDCT_TYPE_ID, D.MO_END_DT				
+        from qMain				
+        ,    PM_DEV_DWS.DW.VW_DATE_DIM d				
+        where d.DATE_DIM_ID BETWEEN				
+CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN DATEADD(month, -12, DATE_TRUNC('MONTH', CURRENT_DATE()))
+    ELSE DATEADD(month, -12, DATE_TRUNC('MONTH', cast(#Prompt('dtRunDate')# as date)))
+END
+ AND CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN CURRENT_DATE - DAYOFMONTH(CURRENT_DATE())
+    ELSE DATEADD(day, -DAYOFMONTH(cast(#Prompt('dtRunDate')# as date)), cast(#Prompt('dtRunDate')# as date))
+END				
+        ) a				
+        				
+        left outer join 				
+        				
+        (select *				
+        from qMain) b				
+        				
+        on a.ORG_INDV_ID = b.ORG_INDV_ID				
+        and a.PDCT_TYPE_ID = b.PDCT_TYPE_ID				
+        and a.MO_END_DT = b.MO_END_DT				
+        				
+        left outer join 				
+        				
+        (select x.SPSR_ORG_ID				
+        ,       x.mo_end_dt				
+        ,       x.PDCT_TYPE_ID				
+        ,       case when mod(x.cnt, 2) = 1 then qdays else ((qdays + nextrow)/2) end as medays				
+        				
+        from    				
+                (select S.SPSR_ORG_ID				
+                ,       dd.date_dim_id				
+                ,       dd.mo_end_dt				
+                ,       PM_DEV_DWS.DW.VW_PDCT_TYPE.PDCT_TYPE_ID				
+                ,       (( SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT )) - (( SBSPN_DW.ENRL_START_DT )) as qdays				
+                ,       count(SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT) Over(Partition BY S.SPSR_ORG_ID, DW.VW_PDCT_TYPE.PDCT_TYPE_ID, dd.mo_end_dt) as cnt				
+               ,       Row_Number() Over(Partition BY S.SPSR_ORG_ID, DW.VW_PDCT_TYPE.PDCT_TYPE_ID, dd.mo_end_dt order by S.SPSR_ORG_ID,  PM_DEV_DWS.DW.VW_PDCT_TYPE.PDCT_TYPE_ID,dd.mo_end_dt,(( SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT )) - (( SBSPN_DW.ENRL_START_DT ))) as rownum				
+                ,       Lead((( SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT )) - (( SBSPN_DW.ENRL_START_DT )), 1) Over(Partition BY S.SPSR_ORG_ID, PM_DEV_DWS.DW.VW_PDCT_TYPE.PDCT_TYPE_ID,dd.mo_end_dt order by  S.SPSR_ORG_ID, DW.VW_PDCT_TYPE.PDCT_TYPE_ID, dd.mo_end_dt, (( SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT )) - (( SBSPN_DW.ENRL_START_DT ))) nextrow				
+              				
+                from PM_DEV_DWS.DW.VW_PDCT_TYPE				
+                ,    PM_DEV_DWS.COM.VW_SPSR_DIM S				
+                ,    PM_DEV_DWS.DW.VW_SBSPN_LIFECYC_SMRY  SBSPN_LIFECYC_SMRY				
+                ,    PM_DEV_DWS.DW.VW_SBSPN  SBSPN_DW				
+                ,    PM_DEV_DWS.DW.VW_RPT  SBSPN_RPT				
+                ,    PM_DEV_DWS.DW.VW_SBSPN_PDCT_VER pv				
+                ,    PM_DEV_DWS.DW.VW_PDCT_LINE				
+                ,    PM_DEV_DWS.DW.VW_ORG_RPT  SBSPN_ORG_RPT				
+                ,    PM_DEV_DWS.DW.VW_DATE_DIM dd 				
+				
+                WHERE 1=1				
+                and   SBSPN_LIFECYC_SMRY.FIRST_PYMT_SCHD_DT >  CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN DATEADD(month, -12, DATE_TRUNC('MONTH', CURRENT_DATE()))
+    ELSE DATEADD(month, -12, DATE_TRUNC('MONTH', cast(#Prompt('dtRunDate')# as date)))
+END				
+                and   dd.date_dim_id = SBSPN_DW.ENRL_START_DT				
+                and   SBSPN_LIFECYC_SMRY.SBSPN_ID=SBSPN_DW.SBSPN_ID  				
+                AND   SBSPN_DW.ORG_INDV_ID=SBSPN_LIFECYC_SMRY.SPSR_ORG_INDV_ID				
+                and   SBSPN_LIFECYC_SMRY.SPSR_ORG_INDV_ID = SBSPN_DW.ORG_INDV_ID				
+                AND   SBSPN_DW.ORG_INDV_ID=SBSPN_ORG_RPT.ORG_INDV_ID  				
+                AND   SBSPN_ORG_RPT.RPT_ID=SBSPN_RPT.RPT_ID  				
+                AND   pv.SBSPN_ID=SBSPN_DW.SBSPN_ID  				
+                AND   S.SPSR_ORG_ID=SBSPN_ORG_RPT.ORG_INDV_ID				
+                AND   PM_DEV_DWS.DW.VW_PDCT_LINE.PDCT_TYPE_ID=DW.VW_PDCT_TYPE.PDCT_TYPE_ID  				
+                AND   pv.PDCT_LINE_ID=DW.VW_PDCT_LINE.PDCT_LINE_ID  				
+                and   pv.EFF_START_DT = 				
+                        (select min(eff_start_dt) from dw.vw_sbspn_pdct_ver Npv				
+                        where Npv.src_tbl_nm = 'SBSR'				
+                        and Npv.sbspn_id = SBSPN_DW.SBSPN_ID)				
+                AND   SBSPN_RPT.LGCY_RPT_ID  = #Prompt('Enter a Report ID','Int')# 				
+                AND   SBSPN_DW.SBSPN_ID > 0 				
+                AND   pv.SRC_TBL_NM='SBSR'  				
+                AND ( #Prompt('strClientID','text')# = '-1' OR s.LGCY_SPSR_ID = #Prompt('strClientID','text')# )				
+                AND   SBSPN_DW.ENRL_START_DT BETWEEN				
+CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN DATEADD(month, -12, DATE_TRUNC('MONTH', CURRENT_DATE))
+    ELSE DATEADD(month, -12, DATE_TRUNC('MONTH', cast(#Prompt('dtRunDate')# as date)))
+END AND CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' 
+    THEN CURRENT_DATE - DAYOFMONTH(CURRENT_DATE())
+    ELSE DATEADD(day, -DAYOFMONTH(cast(#Prompt('dtRunDate')# as date)), cast(#Prompt('dtRunDate')# as date))
+END				
+                ) x         				
+        where x.rownum = floor((x.cnt + 1)/2)				
+        ) c				
+		
+        				
+        on a.ORG_INDV_ID = c.SPSR_ORG_ID				
+        and a.mo_end_dt = c.mo_end_dt				
+        and a.PDCT_TYPE_ID = c.PDCT_TYPE_ID				
+				
+        Join SPM.VW_SPSR_DIM s				
+        on a.ORG_INDV_ID = s.SPSR_ORG_ID				
+        				
+        join PM_DEV_DWS.DW.VW_PDCT_TYPE p				
+        on a.PDCT_TYPE_ID = p.PDCT_TYPE_ID	
