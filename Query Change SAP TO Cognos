@@ -174,3 +174,5 @@ CASE
     THEN CURRENT_DATE - DAYOFMONTH(CURRENT_DATE())
     ELSE DATEADD(day, -DAYOFMONTH(TO_TIMESTAMP(:dtRunDate)), TO_TIMESTAMP(:dtRunDate))
 END
+
+CASE WHEN @Prompt(dtRunDate)  = '9999-12-31 00:00:00' THEN CURRENT_DATE -(DAY(CURRENT_DATE)-1)  - cast('12 month' as interval)  ELSE TIMESTAMP(@Prompt(dtRunDate) ) -(DAY(TIMESTAMP(@Prompt(dtRunDate) ))-1) - cast('12 month' as interval) END
