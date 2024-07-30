@@ -22,6 +22,13 @@ OR
    AND
    (
     DW.VW_CLM_LIFECYC_SMRY.CLM_REOPN_SEQ_NBR  =  0
+
+
+
+
+
+
+CASE WHEN #Prompt('dtRunDate')#  = '9999-12-31 00:00:00' THEN CURRENT_DATE -(DAY(CURRENT_DATE)-1)  - cast('12 month' as interval)  ELSE TIMESTAMP(@Prompt(dtRunDate) ) -(DAY(TIMESTAMP(@Prompt(dtRunDate) ))-1)  - cast('12 month' as interval) END AND CASE WHEN @Prompt(dtRunDate)  = '9999-12-31 00:00:00' THEN CURRENT_DATE - (DAY(CURRENT_DATE))  ELSE TIMESTAMP(@Prompt(dtRunDate) ) - (DAY(TIMESTAMP(@Prompt(dtRunDate) ))) END				
     AND
     ( ( DW.VW_CLM_LIFECYC_SMRY.CLM_END_TMS )
 BETWEEN CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN DATE_TRUNC('Month',CURRENT_DATE)  ELSE  DATE_TRUNC('Month',@Prompt(dtRunDate)) END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN current_date ELSE  @Prompt(dtRunDate) END  )
@@ -125,3 +132,5 @@ GROUP BY
   'Fiserv',
   'Custom SQL';
 
+CASE WHEN #Prompt('dtRunDate')#  = '9999-12-31 00:00:00' THEN CURRENT_DATE -(DAY(CURRENT_DATE)-1)  - cast('12 month' as interval)  ELSE TIMESTAMP(@Prompt(dtRunDate) ) -(DAY(TIMESTAMP(@Prompt(dtRunDate) ))-1)  - cast('12 month' as interval) END 
+AND CASE WHEN @Prompt(dtRunDate)  = '9999-12-31 00:00:00' THEN CURRENT_DATE - (DAY(CURRENT_DATE))  ELSE TIMESTAMP(@Prompt(dtRunDate) ) - (DAY(TIMESTAMP(@Prompt(dtRunDate) ))) END				
