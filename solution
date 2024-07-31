@@ -791,4 +791,13 @@ case
 end
 
 
+/* Define variables */
+[i] = 1
+[j] = 1
+[k] = 1
+[enroll] = 0
+[Act] = 0
+
+/* Define aggregated values */
+[MonthlyEnrollment] = total([EnrollmentCount] for_each ([EnrollmentDate] by month))
 
