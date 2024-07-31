@@ -774,4 +774,21 @@ else(
 );
 
 
+/* Example to calculate total growth by month */
+MonthlyGrowth = total([EnrollmentCount] for_each ([EnrollmentDate] by month))
+
+/* Conditional logic example */
+CalculatedField = 
+case
+    when ([i] >= 3) then 
+        /* Logic to handle growth and reset values */
+        [enroll] = 0;
+        [Act] = 0;
+        [j] = [j] + 1;
+        [i] = 1;
+    else
+        [i] = [i] + 1;
+end
+
+
 
