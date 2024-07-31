@@ -801,3 +801,27 @@ end
 /* Define aggregated values */
 [MonthlyEnrollment] = total([EnrollmentCount] for_each ([EnrollmentDate] by month))
 
+
+
+shared numbervar i;
+shared numbervar j;
+shared numbervar k;
+shared numbervar enroll;
+shared numbervar Act;
+shared numbervar array growth;
+shared numbervar array mGrowth;
+
+if i >= 3 then(
+	growth[j]:=enroll;
+	enroll:=0;
+	Act:=0;
+	j:=j+1;
+	i:=1
+	)
+else(
+	i:=i+1;
+);
+
+mGrowth[k] := Sum ({EDW_Client_Connect.Subscriber\Subscriber ID Enrollment Count}, {EDW_Client_Connect.Subscriber\Enrollment Date}, "monthly");
+k:=k+1;
+i;
