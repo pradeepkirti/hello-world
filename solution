@@ -718,3 +718,60 @@ Shared NumberVar Act:=0;
 reDim growth[6];
 reDim mGrowth[99];
 i;
+
+
+
+shared numbervar i;
+shared numbervar j;
+shared numbervar k;
+shared numbervar enroll;
+shared numbervar Act;
+shared numbervar array growth;
+shared numbervar array mGrowth;
+
+if i >= 3 then(
+	growth[j]:=enroll;
+	enroll:=0;
+	Act:=0;
+	j:=j+1;
+	i:=1
+	)
+else(
+	i:=i+1;
+);
+
+mGrowth[k] := Sum ({EDW_Client_Connect.Subscriber\Subscriber ID Enrollment Count}, {EDW_Client_Connect.Subscriber\Enrollment Date}, "monthly");
+k:=k+1;
+i;
+
+
+
+shared numbervar j;
+shared numbervar enroll;
+shared numbervar array growth;
+
+if j>1 then(
+	if growth[j-1] = 0 then 0 else
+		(({@Quarterly Enrollments}-growth[j-1])/growth[j-1])*100;	
+)
+else
+	0;
+
+
+% Growth Enrollments
+
+shared numberVar k;
+shared numberVar array mGrowth;
+
+if k < 2 then
+	0
+else(
+	if mGrowth[k-1] = 0 then
+		0
+	else 
+		(({EDW_Client_Connect.Subscriber\Subscriber ID Enrollment Count}-mGrowth[k-1])/mGrowth[k-1])*100;
+
+);
+
+
+
