@@ -893,3 +893,7 @@ if (formatDate([dtRunDate], "MMddyyyy") = "12319999") then
 else
     _add_days([dtRunDate], -dayOfWeek([dtRunDate]) + 1)
 
+if length(trim[Dimension 2]) >= 4 then
+	"*" + right(trim[Dimension 2],4)
+else
+	trim([Dimension 2])
