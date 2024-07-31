@@ -904,3 +904,9 @@ if (length(trim([Dimension 2])) >= 4) then
 else
     trim([Dimension 2])
 
+
+if (length(trim([Dimension 2])) >= 4) then
+    concat("*", right(trim([Dimension 2]), 4))
+else
+    trim([Dimension 2])
+
