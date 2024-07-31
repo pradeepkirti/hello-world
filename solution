@@ -825,3 +825,58 @@ else(
 mGrowth[k] := Sum ({EDW_Client_Connect.Subscriber\Subscriber ID Enrollment Count}, {EDW_Client_Connect.Subscriber\Enrollment Date}, "monthly");
 k:=k+1;
 i;
+
+
+/* Initialize or set values based on conditions */
+[Calculated_i] =
+case
+    when ([i] >= 3) then
+        /* Logic to handle the reset and increment operations */
+        1  /* Reset i */
+    else
+        [i] + 1  /* Increment i */
+end
+
+[Calculated_j] =
+case
+    when ([i] >= 3) then
+        [j] + 1  /* Increment j */
+    else
+        [j]  /* Keep j unchanged */
+end
+
+[Calculated_enroll] =
+case
+    when ([i] >= 3) then
+        0  /* Reset enroll */
+    else
+        [enroll]  /* Keep enroll unchanged */
+end
+
+[Calculated_Act] =
+case
+    when ([i] >= 3) then
+        0  /* Reset Act */
+    else
+        [Act]  /* Keep Act unchanged */
+end
+
+
+/* Monthly aggregation */
+[MonthlyEnrollment] =
+total([Subscriber ID Enrollment Count] for_each ([Enrollment Date] by month))
+
+
+
+/* Track monthly growth */
+[MonthlyGrowth] =
+total([Subscriber ID Enrollment Count] for_each ([Enrollment Date] by month))
+
+/* Update index-like values */
+[Index_k] =
+case
+    when ([i] >= 3) then
+        [k] + 1  /* Increment k */
+    else
+        [k]  /* Keep k unchanged */
+end
