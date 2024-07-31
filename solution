@@ -706,3 +706,15 @@ case
     when [D.LGCY_REM_CTR_NBR] > 0 then [D.LGCY_REM_CTR_NBR]
     else 0
 end
+
+
+Shared NumberVar i:=1;
+Shared NumberVar j:=1;
+Shared NumberVar k:=1;
+Shared NumberVar Array growth;
+Shared NumberVar Array mGrowth;
+Shared NumberVar enroll:=0;
+Shared NumberVar Act:=0;
+reDim growth[6];
+reDim mGrowth[99];
+i;
