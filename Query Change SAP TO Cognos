@@ -377,3 +377,10 @@ if (length(trim([EDW_Client_Connect.Placeholders].[Dimension 2])) >= 4) then
   '*' || right(trim([EDW_Client_Connect.Placeholders].[Dimension 2]), 4)
 else
   trim([EDW_Client_Connect.Placeholders].[Dimension 2])
+
+
+
+if totext((?dtRunDate?), "MMddyyyy") = "12319999" then
+	totext(dateadd("d", -(dayofweek(currentdate()-1)), currentdate()),"MMMM d, yyyy")
+else
+	totext(dateadd("d", -(dayofweek((?dtRunDate?))-1), (?dtRunDate)),"MMMM d, yyyy")
