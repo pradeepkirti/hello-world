@@ -384,3 +384,9 @@ if totext((?dtRunDate?), "MMddyyyy") = "12319999" then
 	totext(dateadd("d", -(dayofweek(currentdate()-1)), currentdate()),"MMMM d, yyyy")
 else
 	totext(dateadd("d", -(dayofweek((?dtRunDate?))-1), (?dtRunDate)),"MMMM d, yyyy")
+
+
+if (substring(formatDate([dtRunDate], 'MMddyyyy'), 1, 8) = "12319999") then
+    formatDate(dateAddDays(current_date, -dayOfWeek(current_date, 'Monday') + 1), "MMMM d, yyyy")
+else
+    formatDate(dateAddDays([dtRunDate], -dayOfWeek([dtRunDate], 'Monday') + 1), "MMMM d, yyyy")
