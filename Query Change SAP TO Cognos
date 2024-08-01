@@ -371,3 +371,9 @@ if length(trim({EDW_Client_Connect.Placeholders\Dimension 2})) >= 4 then
 	"*" + right(trim({EDW_Client_Connect.Placeholders\Dimension 2}),4)
 else
 	trim({EDW_Client_Connect.Placeholders\Dimension 2})
+
+
+if (length(trim([EDW_Client_Connect.Placeholders].[Dimension 2])) >= 4) then
+  '*' || right(trim([EDW_Client_Connect.Placeholders].[Dimension 2]), 4)
+else
+  trim([EDW_Client_Connect.Placeholders].[Dimension 2])
