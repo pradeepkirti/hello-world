@@ -364,3 +364,10 @@ END
         join PM_DEV_DWS.DW.VW_PDCT_TYPE p				
         on a.PDCT_TYPE_ID = p.PDCT_TYPE_ID	
 CAF-WRN-2082 An error has occurred. Please contact your administrator. The complete error has been logged by CAF with SecureErrorID:2024-07-30-03:22:38.435-#35
+
+
+
+if length(trim({EDW_Client_Connect.Placeholders\Dimension 2})) >= 4 then
+	"*" + right(trim({EDW_Client_Connect.Placeholders\Dimension 2}),4)
+else
+	trim({EDW_Client_Connect.Placeholders\Dimension 2})
