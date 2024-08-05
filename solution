@@ -931,3 +931,6 @@ else
   _monthname(to_date(UserResponse('End Month'), 'yyyyMM')) || 
   " " || 
   _year(to_date(UserResponse('End Month'), 'yyyyMM'))
+
+
+=Left(Trim([VAR Sponsor]);Pos(Trim([VAR Sponsor]);"-")-1)
