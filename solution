@@ -911,3 +911,13 @@ else
     trim([Dimension 2])
 
 ="For "+ FormatDate(ToDate(UserResponse("Select Start Month:");"yyyyMM");"Mmmm yyyy") + " to " + FormatDate(ToDate(UserResponse("Select End Month:");"yyyyMM");"Mmmm yyyy") 
+
+
+"For " || 
+  _monthname(to_date(UserResponse('Select Start Month:'), 'yyyyMM')) || 
+  " " || 
+  _year(to_date(UserResponse('Select Start Month:'), 'yyyyMM')) || 
+  " to " || 
+  _monthname(to_date(UserResponse('Select End Month:'), 'yyyyMM')) || 
+  " " || 
+  _year(to_date(UserResponse('Select End Month:'), 'yyyyMM'))
