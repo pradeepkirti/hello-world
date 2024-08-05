@@ -939,3 +939,4 @@ substring(trim([VAR Sponsor]), 1, index(trim([VAR Sponsor]), "-") - 1)
 
 
 ="Page "+ Page()+ " of " + NumberOfPages()
+"Page " || _page_number() || " of " || _total_pages()
