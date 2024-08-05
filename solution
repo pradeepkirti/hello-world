@@ -910,3 +910,4 @@ if (length(trim([Dimension 2])) >= 4) then
 else
     trim([Dimension 2])
 
+="For "+ FormatDate(ToDate(UserResponse("Select Start Month:");"yyyyMM");"Mmmm yyyy") + " to " + FormatDate(ToDate(UserResponse("Select End Month:");"yyyyMM");"Mmmm yyyy") 
