@@ -921,3 +921,13 @@ else
   _monthname(to_date(UserResponse('Select End Month:'), 'yyyyMM')) || 
   " " || 
   _year(to_date(UserResponse('Select End Month:'), 'yyyyMM'))
+
+
+"For " || 
+  _monthname(to_date(UserResponse('Start Month'), 'yyyyMM')) || 
+  " " || 
+  _year(to_date(UserResponse('Start Month'), 'yyyyMM')) || 
+  " to " || 
+  _monthname(to_date(UserResponse('End Month'), 'yyyyMM')) || 
+  " " || 
+  _year(to_date(UserResponse('End Month'), 'yyyyMM'))
