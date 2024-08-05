@@ -934,3 +934,5 @@ else
 
 
 =Left(Trim([VAR Sponsor]);Pos(Trim([VAR Sponsor]);"-")-1)
+
+substring(trim([VAR Sponsor]), 1, index(trim([VAR Sponsor]), "-") - 1)
