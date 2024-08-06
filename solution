@@ -959,3 +959,7 @@ _monthName = case
                 when _month = '12' then 'December'
                 else 'Unknown Month'
               end
+
+
+_year = substring([YourPromptParameter], 1, 4)
+_month = substring([YourPromptParameter], 5, 2)
