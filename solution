@@ -963,3 +963,10 @@ _monthName = case
 
 _year = substring([YourPromptParameter], 1, 4)
 _month = substring([YourPromptParameter], 5, 2)
+
+
+[DateField] >= ?startDate? and [DateField] <= ?endDate?
+
+StartDate: _add_days(current_date, -365)
+EndDate: current_date
+
