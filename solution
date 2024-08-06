@@ -942,3 +942,20 @@ substring(trim([VAR Sponsor]), 1, index(trim([VAR Sponsor]), "-") - 1)
 "Page " || _page_number() || " of " || _total_pages()
 Char(169) + " " + FormatDate(CurrentDate();"yyyy") + ", "+[Fiserv Logo]+", Inc."
 "© " || year(current_date()) || ", " || [Fiserv Logo] || ", Inc."
+
+
+_monthName = case 
+                when _month = '01' then 'January'
+                when _month = '02' then 'February'
+                when _month = '03' then 'March'
+                when _month = '04' then 'April'
+                when _month = '05' then 'May'
+                when _month = '06' then 'June'
+                when _month = '07' then 'July'
+                when _month = '08' then 'August'
+                when _month = '09' then 'September'
+                when _month = '10' then 'October'
+                when _month = '11' then 'November'
+                when _month = '12' then 'December'
+                else 'Unknown Month'
+              end
