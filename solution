@@ -970,3 +970,8 @@ _month = substring([YourPromptParameter], 5, 2)
 StartDate: _add_days(current_date, -365)
 EndDate: current_date
 
+[YourDateField] >= _add_months (_first_of_month (_current_date), -1)
+AND [YourDateField] < _first_of_month (_current_date)
+
+[OrderDate] >= _add_months (_first_of_month (_current_date), -1)
+AND [OrderDate] < _first_of_month (_current_date)
