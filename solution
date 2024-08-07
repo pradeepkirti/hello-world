@@ -993,3 +993,8 @@ CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', da
       _first_of_month(@Prompt('dtRunDate')) - 1
   )
 )
+
+
+ ( ( Table__1.DATE_DIM_ID ) BETWEEN
+CASE WHEN #Prompt('dtRunDate',date) = '9999-12-31' THEN date_trunc('month', date_trunc('month', current_date)-1) ELSE date_trunc('month', date_trunc('month', @Prompt(dtRunDate))-1)  END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', current_date)-1 ELSE date_trunc('month', @Prompt(dtRunDate))-1 END  )
+  )
