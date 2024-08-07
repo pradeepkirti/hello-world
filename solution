@@ -975,3 +975,8 @@ AND [YourDateField] < _first_of_month (_current_date)
 
 [OrderDate] >= _add_months (_first_of_month (_current_date), -1)
 AND [OrderDate] < _first_of_month (_current_date)
+
+
+   ( ( Table__1.DATE_DIM_ID ) BETWEEN
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', date_trunc('month', current_date)-1) ELSE date_trunc('month', date_trunc('month', @Prompt(dtRunDate))-1)  END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', current_date)-1 ELSE date_trunc('month', @Prompt(dtRunDate))-1 END  )
+  )
