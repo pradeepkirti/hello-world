@@ -1011,3 +1011,7 @@ _add_days(_first_of_month(_current_date), -1)
 
 
 #Prompt('dtRunDate')# = '9999-12-31 ' THEN current_date + interval '-1 days' else #Prompt('dtRunDate')# + interval '-1 days' end)
+CASE 
+    WHEN #Prompt('dtRunDate')# = '9999-12-31' THEN DATEADD(day, -1, CURRENT_DATE())
+    ELSE DATEADD(day, -1, #Prompt('dtRunDate')#)
+END
