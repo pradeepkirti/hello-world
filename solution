@@ -1008,3 +1008,6 @@ date_trunc('month', date_trunc('month', @Prompt(dtRunDate))-1)
 date_trunc('month', current_date)-1
 
 _add_days(_first_of_month(_current_date), -1)
+
+
+#Prompt('dtRunDate')# = '9999-12-31 ' THEN current_date + interval '-1 days' else #Prompt('dtRunDate')# + interval '-1 days' end)
