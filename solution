@@ -1015,3 +1015,5 @@ CASE
     WHEN #Prompt('dtRunDate')# = '9999-12-31' THEN DATEADD(day, -1, CURRENT_DATE())
     ELSE DATEADD(day, -1, #Prompt('dtRunDate')#)
 END
+
+CASE WHEN #Prompt('dtRunDate')# = '9999-12-31 00:00:00' THEN current_date + interval '-1 days' else #Prompt('dtRunDate')# + interval '-1 days' end)
