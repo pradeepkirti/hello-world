@@ -1039,3 +1039,13 @@ concat(
     coalesce([Peoplesoft Incident ID], 'N/A'), '      ',
     coalesce([Incident Details], 'No details available')
 )
+
+
+coalesce(format([Incident Date], 'MM/dd/yyyy'), '') + '       ' +
+coalesce([Peoplesoft Incident ID], 'N/A') + '      ' +
+coalesce([Incident Details], 'No details available')
+
+
+coalesce(format([Incident Date], 'MM/dd/yyyy'), '') || '       ' ||
+coalesce([Peoplesoft Incident ID], 'N/A') || '      ' ||
+coalesce([Incident Details], 'No details available')
