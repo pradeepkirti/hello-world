@@ -1025,3 +1025,10 @@ END
 
 
 to_char([Incident Date],'MM/dd/yyyy') + '       ' + [Peoplesoft Incident ID] + '      ' + [Incident Details]
+
+
+concat(
+    format([Incident Date], 'MM/dd/yyyy'), '       ',
+    [Peoplesoft Incident ID], '      ',
+    [Incident Details]
+)
