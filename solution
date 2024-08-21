@@ -1032,3 +1032,10 @@ concat(
     [Peoplesoft Incident ID], '      ',
     [Incident Details]
 )
+
+
+concat(
+    coalesce(format([Incident Date], 'MM/dd/yyyy'), ' '), '       ',
+    coalesce([Peoplesoft Incident ID], 'N/A'), '      ',
+    coalesce([Incident Details], 'No details available')
+)
