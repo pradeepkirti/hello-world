@@ -1022,3 +1022,6 @@ CASE
     THEN CURRENT_DATE - INTERVAL '1 DAY'
     ELSE #Prompt('dtRunDate')# - INTERVAL '1 DAY'
 END
+
+
+to_char([Incident Date],'MM/dd/yyyy') + '       ' + [Peoplesoft Incident ID] + '      ' + [Incident Details]
