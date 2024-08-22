@@ -1077,3 +1077,18 @@ replace(
 )
 
 
+trim(
+    replace(
+        replace(
+            substring(
+                ReportFilterSummary("Dormant P2P Users"),
+                index(ReportFilterSummary("Dormant P2P Users"), "Include Users that registered after") + length("Include Users that registered after"),
+                index(substring(ReportFilterSummary("Dormant P2P Users"), index(ReportFilterSummary("Dormant P2P Users"), "Include Users that registered after") + length("Include Users that registered after"), 200), char(13))
+            ),
+            "Include Users that registered after",
+            ""
+        ),
+        "Greater than",
+        ""
+    )
+)
