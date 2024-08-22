@@ -1049,3 +1049,6 @@ coalesce([Incident Details], 'No details available')
 coalesce(format([Incident Date], 'MM/dd/yyyy'), '') || '       ' ||
 coalesce([Peoplesoft Incident ID], 'N/A') || '      ' ||
 coalesce([Incident Details], 'No details available')
+
+
+LeftTrim(RightTrim(Replace(Replace(If Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after") > 0 Then Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after"); Pos(Substr(ReportFilterSummary("Dormant P2P Users"); Pos(ReportFilterSummary("Dormant P2P Users"); "Include Users that registered after"); 200); Char(13)) - 1); "Include Users that registered after";"");"Greater than";"")))
