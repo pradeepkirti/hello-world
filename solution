@@ -1189,3 +1189,5 @@ case
     else 'Business'
 end
 
+
+=Count([Subscriber ID]; All)
