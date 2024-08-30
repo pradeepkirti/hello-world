@@ -1151,3 +1151,8 @@ END
 
 
 ToDate("1/1/0001"; "M/d/yyyy")
+
+
+=FormatNumber([Payment-Dormant Days];"0000000000")+"|"+Right([Subscriber ID];6)
+
+=Rank([Derived Rank Value];Top)
