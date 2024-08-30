@@ -1174,3 +1174,7 @@ concat(
 
 
 FormatNumber([Payment-Dormant Days];"0000000000")
+
+
+lpad(cast([Payment-Dormant Days] as varchar(10)), 10, '0')
+
