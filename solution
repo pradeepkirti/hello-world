@@ -1156,3 +1156,11 @@ ToDate("1/1/0001"; "M/d/yyyy")
 =FormatNumber([Payment-Dormant Days];"0000000000")+"|"+Right([Subscriber ID];6)
 
 =Rank([Derived Rank Value];Top)
+
+concat(
+  format([Payment-Dormant Days], '0000000000'),
+  '|',
+  substr([Subscriber ID], length([Subscriber ID]) - 5, 6)
+)
+
+rank([Derived Rank Value], 'desc')
