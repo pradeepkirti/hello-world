@@ -1148,3 +1148,6 @@ CASE
   ELSE 
     0 
 END
+
+
+ToDate("1/1/0001"; "M/d/yyyy")
