@@ -1164,3 +1164,10 @@ concat(
 )
 
 rank([Derived Rank Value], 'desc')
+
+
+concat(
+  lpad(cast([Payment-Dormant Days] as varchar(10)), 10, '0'),
+  '|',
+  substr([Subscriber ID], length([Subscriber ID]) - 5, 6)
+)
