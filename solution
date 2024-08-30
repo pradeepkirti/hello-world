@@ -1182,3 +1182,10 @@ Sub Type
 
 =If [Subscriber Type]="R" Then "Retail" ElseIf [Subscriber Type] = "I" Then "Retail" Else "Business"
 
+
+case 
+    when [Subscriber Type] = 'R' then 'Retail'
+    when [Subscriber Type] = 'I' then 'Retail'
+    else 'Business'
+end
+
