@@ -1100,3 +1100,15 @@ format([ADMIN].[VW_CQ_SAF_36MONTH_PER_DIM].[MO_END_DT], 'YYYY-MM') = ?MonthYear?
 
 
 =If [Subscriber Status] = "A" Then If [Last Payment Date] = ToDate("1/1/0001"; "M/d/yyyy") Then If [Date of Last Status Change] <=[Enrollment Date] Then DaysBetween([Enrollment Date];[Month End Date]) Else DaysBetween([Date of Last Status Change];[Month End Date]) Else DaysBetween([Last Payment Date];[Month End Date]) Else 0
+
+
+if ([Subscriber Status] = 'A') then 
+  if ([Last Payment Date] = _add_days(_first_of_year(current_date), -1)) then 
+    if ([Date of Last Status Change] <= [Enrollment Date]) then 
+      _days_between([Enrollment Date], [Month End Date]) 
+    else 
+      _days_between([Date of Last Status Change], [Month End Date])
+  else 
+    _days_between([Last Payment Date], [Month End Date])
+else 
+  0
