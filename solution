@@ -1112,3 +1112,21 @@ if ([Subscriber Status] = 'A') then
     _days_between([Last Payment Date], [Month End Date])
 else 
   0
+
+
+CASE 
+  WHEN [Subscriber Status] = 'A' THEN 
+    CASE 
+      WHEN [Last Payment Date] = _add_days(_first_of_year(current_date), -1) THEN 
+        CASE 
+          WHEN [Date of Last Status Change] <= [Enrollment Date] THEN 
+            _days_between([Enrollment Date], [Month End Date]) 
+          ELSE 
+            _days_between([Date of Last Status Change], [Month End Date]) 
+        END 
+      ELSE 
+        _days_between([Last Payment Date], [Month End Date]) 
+    END 
+  ELSE 
+    0 
+END
