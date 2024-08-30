@@ -1092,3 +1092,6 @@ trim(
         ""
     )
 )
+
+
+( TO_CHAR(ADMIN.VW_CQ_SAF_36MONTH_PER_DIM.MO_END_DT, 'YYYY-MM') = @Prompt('Enter Month','A','Month\Year-Month',Mono,Free,Not_Persistent)  )
