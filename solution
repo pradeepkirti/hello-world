@@ -1197,3 +1197,21 @@ end
     ElseIf ([Number of P2P Send Transactions] + [Number of A2A Transfers]) = 0 Then "Only Bill Pay"
       ElseIf [Number of P2P Send Transactions] > 0 Then If [Number of Bill Payments] = 0 Then If [Number of A2A Transfers] = 0 Then "Only P2P" Else "P2P & A2A" ElseIf [Number of A2A Transfers] = 0 Then "Bill Pay & P2P" Else "Bill Pay & P2P & A2A"
 ElseIf [Number of Bill Payments] > 0 Then "Bill Pay & A2A" Else "Only A2A"
+
+
+case 
+    when [Number of Electronic Payments] = 0 then 'Only Bill Pay'
+    when ([Number of P2P Send Transactions] + [Number of A2A Transfers]) = 0 then 'Only Bill Pay'
+    when [Number of P2P Send Transactions] > 0 then
+        case 
+            when [Number of Bill Payments] = 0 and [Number of A2A Transfers] = 0 then 'Only P2P'
+            when [Number of A2A Transfers] > 0 then 'P2P & A2A'
+            else 'Bill Pay & P2P'
+        end
+    when [Number of Bill Payments] > 0 then
+        case 
+            when [Number of A2A Transfers] = 0 then 'Bill Pay & A2A'
+            else 'Bill Pay & P2P & A2A'
+        end
+    else 'Only A2A'
+end
