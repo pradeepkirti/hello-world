@@ -1255,3 +1255,8 @@ case
   then 0 
   else ([Number of Bills Discovered by CB] / [Total Nbr of Bills Discovered]) * 100
 end
+
+
+Average((If [Main].[Makers] = 0
+Then 0
+Else ([Main].[Bill Pay Payments] / [Main].[Makers])) ForEach([Main].[Month End Date]))
