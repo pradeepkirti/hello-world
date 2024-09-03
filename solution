@@ -1306,3 +1306,4 @@ end
 
 
 Round([Total Nbr of Bills Dscvrd - % CB];2)-Round([Total Nbr of Bills Dscvrd - % CB - One Year Ago];2)
+round([Total Nbr of Bills Dscvrd - % CB], 2) - round([Total Nbr of Bills Dscvrd - % CB - One Year Ago], 2)
