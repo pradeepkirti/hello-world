@@ -1223,3 +1223,4 @@ RelativeDate([Report End Date]; -([Number of months to report]-1);MonthPeriod)
 _add_months([Report End Date], -([Number of months to report] - 1))
 
 =ToNumber(UserResponse("Select Number of Months to Report (1-12):"))
+cast(?MonthsPrompt? as Integer)
