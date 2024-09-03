@@ -1274,3 +1274,14 @@ Or [Main].[Bill Discovery Consenting Subscribers] = 0
 Then -1
 Else
 ([Main].[Bill Discovery Consenting Subscribers]-[Main (One Year Ago)].[Bill Discovery Consenting Subscribers])/[Main (One Year Ago)].[Bill Discovery Consenting Subscribers]
+
+
+if (isNull([Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) or [Main (One Year Ago)].[Bill Discovery Consenting Subscribers] = 0)
+    and (isNull([Main].[Bill Discovery Consenting Subscribers]) or [Main].[Bill Discovery Consenting Subscribers] = 0)
+then (0)
+else if (isNull([Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) or [Main (One Year Ago)].[Bill Discovery Consenting Subscribers] = 0)
+then (1)
+else if (isNull([Main].[Bill Discovery Consenting Subscribers]) or [Main].[Bill Discovery Consenting Subscribers] = 0)
+then (-1)
+else ([Main].[Bill Discovery Consenting Subscribers] - [Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) / [Main (One Year Ago)].[Bill Discovery Consenting Subscribers]
+
