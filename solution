@@ -1224,3 +1224,14 @@ _add_months([Report End Date], -([Number of months to report] - 1))
 
 =ToNumber(UserResponse("Select Number of Months to Report (1-12):"))
 cast(?MonthsPrompt? as Integer)
+
+
+
+=If IsNull([Main].[Presented Discovered Bills, CB Add w/Verification]+[Main].[Presented Discovered Bills, CB Quick Add]+[Main].[Presented Discovered Bills, FBN Add w/Verification]+[Main].[Presented Discovered Bills,  FBN Quick Add]) 
+Then 0 
+Else [Main].[Presented Discovered Bills, CB Add w/Verification]+[Main].[Presented Discovered Bills, CB Quick Add]+[Main].[Presented Discovered Bills, FBN Add w/Verification]+[Main].[Presented Discovered Bills,  FBN Quick Add]
+
+
+
+=If [Total Nbr of Bills Discovered] = 0 Then 0 
+Else ([Number of Bills Discovered by CB] / [Total Nbr of Bills Discovered]) * 100
