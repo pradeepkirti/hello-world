@@ -1215,3 +1215,6 @@ case
         end
     else 'Only A2A'
 end
+
+
+RelativeDate([Report End Date]; -([Number of months to report]-1);MonthPeriod)
