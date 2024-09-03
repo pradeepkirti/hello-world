@@ -1235,3 +1235,23 @@ Else [Main].[Presented Discovered Bills, CB Add w/Verification]+[Main].[Presente
 
 =If [Total Nbr of Bills Discovered] = 0 Then 0 
 Else ([Number of Bills Discovered by CB] / [Total Nbr of Bills Discovered]) * 100
+
+
+case 
+  when coalesce([Main].[Presented Discovered Bills, CB Add w/Verification], 0) +
+       coalesce([Main].[Presented Discovered Bills, CB Quick Add], 0) +
+       coalesce([Main].[Presented Discovered Bills, FBN Add w/Verification], 0) +
+       coalesce([Main].[Presented Discovered Bills, FBN Quick Add], 0) = 0
+  then 0
+  else coalesce([Main].[Presented Discovered Bills, CB Add w/Verification], 0) +
+       coalesce([Main].[Presented Discovered Bills, CB Quick Add], 0) +
+       coalesce([Main].[Presented Discovered Bills, FBN Add w/Verification], 0) +
+       coalesce([Main].[Presented Discovered Bills, FBN Quick Add], 0)
+end
+
+
+case 
+  when [Total Nbr of Bills Discovered] = 0 
+  then 0 
+  else ([Number of Bills Discovered by CB] / [Total Nbr of Bills Discovered]) * 100
+end
