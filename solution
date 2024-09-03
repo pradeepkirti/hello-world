@@ -1285,3 +1285,21 @@ else if (isNull([Main].[Bill Discovery Consenting Subscribers]) or [Main].[Bill 
 then (-1)
 else ([Main].[Bill Discovery Consenting Subscribers] - [Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) / [Main (One Year Ago)].[Bill Discovery Consenting Subscribers]
 
+case
+    when (isNull([Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) 
+          or [Main (One Year Ago)].[Bill Discovery Consenting Subscribers] = 0)
+         and (isNull([Main].[Bill Discovery Consenting Subscribers]) 
+              or [Main].[Bill Discovery Consenting Subscribers] = 0)
+    then (0)
+
+    when (isNull([Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) 
+          or [Main (One Year Ago)].[Bill Discovery Consenting Subscribers] = 0)
+    then (1)
+
+    when (isNull([Main].[Bill Discovery Consenting Subscribers]) 
+          or [Main].[Bill Discovery Consenting Subscribers] = 0)
+    then (-1)
+
+    else ([Main].[Bill Discovery Consenting Subscribers] - [Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) 
+         / [Main (One Year Ago)].[Bill Discovery Consenting Subscribers]
+end
