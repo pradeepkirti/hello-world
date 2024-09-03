@@ -1260,3 +1260,17 @@ end
 Average((If [Main].[Makers] = 0
 Then 0
 Else ([Main].[Bill Pay Payments] / [Main].[Makers])) ForEach([Main].[Month End Date]))
+
+
+
+=If (IsNull([Main (One Year Ago)].[Bill Discovery Consenting Subscribers]) Or [Main (One Year Ago)].[Bill Discovery Consenting Subscribers] = 0)
+And (IsNull([Main].[Bill Discovery Consenting Subscribers]) Or [Main].[Bill Discovery Consenting Subscribers] = 0) 
+Then 0
+ElseIf IsNull([Main (One Year Ago)].[Bill Discovery Consenting Subscribers])
+Or [Main (One Year Ago)].[Bill Discovery Consenting Subscribers] = 0
+Then 1
+ElseIf IsNull([Main].[Bill Discovery Consenting Subscribers])
+Or [Main].[Bill Discovery Consenting Subscribers] = 0
+Then -1
+Else
+([Main].[Bill Discovery Consenting Subscribers]-[Main (One Year Ago)].[Bill Discovery Consenting Subscribers])/[Main (One Year Ago)].[Bill Discovery Consenting Subscribers]
