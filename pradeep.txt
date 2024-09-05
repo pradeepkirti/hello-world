@@ -665,3 +665,6 @@ case
     when [Number of A2A Transfers] = 0 then 'Bill Pay & P2P'
     else 'Bill Pay & P2P & A2A'
 end
+
+
+=FormatNumber([Total Transactions];"0000000000")+"|"+FormatNumber([Total Transaction $Amount];"00000000000.00") + "|" + FormatDate([Last Payment Date];"MMdd") + "|"+ Right([Subscriber ID];6)
