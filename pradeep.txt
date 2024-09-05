@@ -650,3 +650,18 @@ CASE
   THEN to_char(add_months(current_date, -1), 'Month, YYYY')
   ELSE to_char(add_months(?psdtRunDate?, -1), 'Month, YYYY')
 END
+
+
+
+case 
+    when [Number of Electronic Payments] = 0 then 'Only Bill Pay'
+    when ([Number of P2P Send Transactions] + [Number of A2A Transfers]) = 0 then 'Only Bill Pay'
+    when [Number of P2P Send Transactions] > 0 then
+        case 
+            when [Number of Bill Payments] = 0 and [Number of A2A Transfers] = 0 then 'Only P2P'
+            when [Number of A2A Transfers] > 0 then 'P2P & A2A'
+            else 'Bill Pay & P2P'
+        end
+    when [Number of A2A Transfers] = 0 then 'Bill Pay & P2P'
+    else 'Bill Pay & P2P & A2A'
+end
