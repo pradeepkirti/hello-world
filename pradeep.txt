@@ -668,3 +668,7 @@ end
 
 
 =FormatNumber([Total Transactions];"0000000000")+"|"+FormatNumber([Total Transaction $Amount];"00000000000.00") + "|" + FormatDate([Last Payment Date];"MMdd") + "|"+ Right([Subscriber ID];6)
+
+
+FormatNumber([Total Transactions], "0000000000") || "|" || FormatNumber([Total Transaction $Amount], "00000000000.00") || "|" || FormatDate([Last Payment Date], "MMdd") || "|" || SubStr([Subscriber ID], Length([Subscriber ID]) - 5, 6)
+
