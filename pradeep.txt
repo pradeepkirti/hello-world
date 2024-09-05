@@ -672,3 +672,24 @@ end
 
 FormatNumber([Total Transactions], "0000000000") || "|" || FormatNumber([Total Transaction $Amount], "00000000000.00") || "|" || FormatDate([Last Payment Date], "MMdd") || "|" || SubStr([Subscriber ID], Length([Subscriber ID]) - 5, 6)
 
+-- Calculate padded Total Transactions
+Substring('0000000000', 1, 10 - Length(Trim(ToString([Total Transactions])))) || ToString([Total Transactions])
+
+-- Calculate padded Total Transaction $Amount
+Substring('00000000000.00', 1, 14 - Length(Trim(ToString([Total Transaction $Amount])))) || ToString([Total Transaction $Amount])
+
+-- Format Date
+FormatDate([Last Payment Date], 'MMdd')
+
+-- Extract Last 6 Characters
+SubStr([Subscriber ID], Length([Subscriber ID]) - 5, 6)
+
+-- Combine all parts
+(
+  Substring('0000000000', 1, 10 - Length(Trim(ToString([Total Transactions])))) || ToString([Total Transactions])
+) || "|" ||
+(
+  Substring('00000000000.00', 1, 14 - Length(Trim(ToString([Total Transaction $Amount])))) || ToString([Total Transaction $Amount])
+) || "|" ||
+FormatDate([Last Payment Date], 'MMdd') || "|" ||
+SubStr([Subscriber ID], Length([Subscriber ID]) - 5, 6)
