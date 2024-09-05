@@ -1311,3 +1311,10 @@ round([Total Nbr of Bills Dscvrd - % CB], 2) - round([Total Nbr of Bills Dscvrd 
 
 
 "FS1"."Sponsor" IS NOT DISTINCT FROM "FS2"."Sponsor"
+
+
+
+=If [Number of Electronic Payments] = 0 Then "Only Bill Pay"
+    ElseIf ([Number of P2P Send Transactions] + [Number of A2A Transfers]) = 0 Then "Only Bill Pay"
+      ElseIf [Number of P2P Send Transactions] > 0 Then If [Number of Bill Payments] = 0 Then If [Number of A2A Transfers] = 0 Then "Only P2P" Else "P2P & A2A" ElseIf [Number of A2A Transfers] = 0 Then "Bill Pay & P2P" Else "Bill Pay & P2P & A2A"
+ElseIf [Number of Bill Payments] > 0 Then "Bill Pay & A2A" Else "Only A2A"
