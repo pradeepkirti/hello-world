@@ -698,3 +698,8 @@ SubStr([Subscriber ID], Length([Subscriber ID]) - 5, 6)
 Average Monthly Payment Makers
 
 Average([Main].[Makers] ForEach([Main].[Month End Date]))
+
+
+If [Main].[Makers] = 0
+Then 0
+Else ([Main].[Bill Pay Payments] / [Main].[Makers])) ForEach([Main].[Month End Date]
