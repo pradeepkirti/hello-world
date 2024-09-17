@@ -730,3 +730,12 @@ if totext({?psdtRunDate}, "MMMM dd, yyyy") = "December 31, 9999" then
       totext(dateadd("d", -1, currentdate), "MMMM dd, yyyy")
 else
       totext(dateadd("d", -1, {?psdtRunDate}), "MMMM dd, yyyy")
+
+
+case
+  when formatDate([?psdtRunDate], 'MMMM dd, yyyy') = 'December 31, 9999' then
+    formatDate(addDays(current_date, -1), 'MMMM dd, yyyy')
+  else
+    formatDate(addDays([?psdtRunDate], -1), 'MMMM dd, yyyy')
+end
+
