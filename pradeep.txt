@@ -724,3 +724,9 @@ end
 
 
 substring([EDW.E-Bill.Failed Biller Event.Failed Transaction Bill Due Date], 1, 8)
+
+
+if totext({?psdtRunDate}, "MMMM dd, yyyy") = "December 31, 9999" then
+      totext(dateadd("d", -1, currentdate), "MMMM dd, yyyy")
+else
+      totext(dateadd("d", -1, {?psdtRunDate}), "MMMM dd, yyyy")
