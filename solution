@@ -1318,3 +1318,14 @@ round([Total Nbr of Bills Dscvrd - % CB], 2) - round([Total Nbr of Bills Dscvrd 
     ElseIf ([Number of P2P Send Transactions] + [Number of A2A Transfers]) = 0 Then "Only Bill Pay"
       ElseIf [Number of P2P Send Transactions] > 0 Then If [Number of Bill Payments] = 0 Then If [Number of A2A Transfers] = 0 Then "Only P2P" Else "P2P & A2A" ElseIf [Number of A2A Transfers] = 0 Then "Bill Pay & P2P" Else "Bill Pay & P2P & A2A"
 ElseIf [Number of Bill Payments] > 0 Then "Bill Pay & A2A" Else "Only A2A"
+
+
+
+
+left({EDW.E-Bill\Failed Biller Event\Failed Transaction Bill Creation Date},8)
+left({EDW.E-Bill\Failed Biller Event\Failed Transaction Bill Due Date},8)
+
+if( isnull({EDW.E-Bill\Failed Biller Event\Failed Transaction Bill Due Amt})) then "0"
+else
+ToText(ToNumber(mid({EDW.E-Bill\Failed Biller Event\Failed Transaction Bill Due Amt},2,13)),"0")
+
