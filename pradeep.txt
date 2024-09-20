@@ -758,3 +758,7 @@ END
 
 
 (DayNumberOfMonth([Date])*24)
+
+
+_dayOfMonth([Date]) * 24
+
