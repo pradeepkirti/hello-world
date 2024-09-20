@@ -755,3 +755,6 @@ CASE
     ELSE 
         _add_days ( _add_months ( ?dtRunDate?, 0), -1 )
 END
+
+
+(DayNumberOfMonth([Date])*24)
