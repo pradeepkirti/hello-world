@@ -740,3 +740,18 @@ case
 end
 
 CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', current_date) + interval '-6 month' ELSE date_trunc('month', @Prompt(dtRunDate)) + interval '-6 month'  END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN date_trunc('month', current_date)-1 ELSE date_trunc('month', @Prompt(dtRunDate))-1 END  )
+
+
+CASE 
+    WHEN ?dtRunDate? = _add_days ( _add_months ( current_date, -6), 1 ) THEN 
+        _add_months ( current_date, -6 )
+    ELSE 
+        _add_months ( _add_days ( ?dtRunDate?, 0), -6 )
+END 
+AND 
+CASE 
+    WHEN ?dtRunDate? = _add_days ( _add_months ( current_date, -6), 1 ) THEN 
+        _add_days ( _add_months ( current_date, 0), -1 )
+    ELSE 
+        _add_days ( _add_months ( ?dtRunDate?, 0), -1 )
+END
