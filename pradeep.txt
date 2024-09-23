@@ -782,3 +782,6 @@ _case
       'MM/YYYY'
     )
 _end
+
+
+=If ( [Industry Selected Flag]='Yes' And Pos(ReportFilter([Industry]),',')=0,Rank([Number of Payments],[Payee],[Industry]),Rank([Number of Payments]))
