@@ -785,3 +785,11 @@ _end
 
 
 =If ( [Industry Selected Flag]='Yes' And Pos(ReportFilter([Industry]),',')=0,Rank([Number of Payments],[Payee],[Industry]),Rank([Number of Payments]))
+
+
+if ([Industry Selected Flag] = 'Yes' and 
+    count(string-to-array([ReportFilter]) ) = 1)
+then 
+    rank([Number of Payments], [Payee], [Industry]) 
+else 
+    rank([Number of Payments])
