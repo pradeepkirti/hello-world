@@ -762,3 +762,9 @@ END
 
 _dayOfMonth([Date]) * 24
 
+
+to_date(
+(CASE
+WHEN @Prompt('Beginning Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'})='PriorMonth' THEN TO_CHAR( DATE (( ( ADMIN.VW_RPT_36MONTH_PER_DIM.RPT_MO_BGN_DT ) )),'MM/YYYY')
+ELSE @Prompt('Beginning Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'}) END)
+, 'MM/YYYY') 
