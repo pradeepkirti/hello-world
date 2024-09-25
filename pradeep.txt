@@ -807,3 +807,11 @@ ELSE
 
 
 =If ( [Industry Selected Flag]="Yes" And Pos(ReportFilter([Industry]);";")=0;Rank([Number of Payments];[Payee];[Industry]);Rank([Number of Payments]))
+
+
+
+IF ([Industry Selected Flag] = "Yes" AND POSITION(";" IN [ReportFilter([Industry])]) = 0) THEN 
+    RANK([Number of Payments], [Payee], [Industry]) 
+ELSE 
+    RANK([Number of Payments])
+
