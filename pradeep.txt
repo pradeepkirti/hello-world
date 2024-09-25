@@ -827,3 +827,14 @@ AND to_date(
 WHEN @Prompt('Ending Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'})='PriorMonth' THEN TO_CHAR( DATE (( ( VW_RPT_36MONTH_PER_DIM.RPT_MO_BGN_DT ) )),'MM/YYYY')
 ELSE @Prompt('Ending Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'}) END)
 , 'MM/YYYY')   )
+
+
+
+{
+    "Parameter name": "P_Sponsor",
+    "MultiSelect": true,
+    "AutoSubmit": false,
+    "Static Choices": "Select All",
+    "dropDownWidth": "160px",
+    "mainContainerWidth": "320px"
+}
