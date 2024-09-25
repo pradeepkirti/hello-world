@@ -815,3 +815,15 @@ IF ([Industry Selected Flag] = "Yes" AND POSITION(";" IN [ReportFilter([Industry
 ELSE 
     RANK([Number of Payments])
 
+
+( ( ( VW_RPT_36MONTH_PER_DIM.MO_BGN_DT ) ) BETWEEN to_date(
+(CASE
+WHEN @Prompt('Beginning Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'})='PriorMonth' THEN TO_CHAR( DATE (( ( VW_RPT_36MONTH_PER_DIM.RPT_MO_BGN_DT ) )),'MM/YYYY')
+ELSE @Prompt('Beginning Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'}) END)
+, 'MM/YYYY') 
+
+AND to_date(
+(CASE
+WHEN @Prompt('Ending Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'})='PriorMonth' THEN TO_CHAR( DATE (( ( VW_RPT_36MONTH_PER_DIM.RPT_MO_BGN_DT ) )),'MM/YYYY')
+ELSE @Prompt('Ending Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'PriorMonth'}) END)
+, 'MM/YYYY')   )
