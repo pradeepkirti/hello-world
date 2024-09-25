@@ -799,4 +799,11 @@ else
 =If(Pos(ReportFilterSummary();"Industry In List {")>0;"Yes";"No")
 
 
+IF (POSITION("Industry In List {" IN [ReportFilterSummary]) > 0) THEN 
+    "Yes" 
+ELSE 
+    "No"
+
+
+
 =If ( [Industry Selected Flag]="Yes" And Pos(ReportFilter([Industry]);";")=0;Rank([Number of Payments];[Payee];[Industry]);Rank([Number of Payments]))
