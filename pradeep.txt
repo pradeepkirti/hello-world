@@ -793,3 +793,10 @@ then
     rank([Number of Payments], [Payee], [Industry]) 
 else 
     rank([Number of Payments])
+
+
+
+=If(Pos(ReportFilterSummary();"Industry In List {")>0;"Yes";"No")
+
+
+=If ( [Industry Selected Flag]="Yes" And Pos(ReportFilter([Industry]);";")=0;Rank([Number of Payments];[Payee];[Industry]);Rank([Number of Payments]))
