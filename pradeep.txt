@@ -22,7 +22,7 @@ END
 
 
 3-Udf_L12M Start Month End Date
-
+totext({ODS.Pay History Previous Current Month\Pay History RC Payment History Date},'yyyy-MM-dd')
 
 -----------------------------------------------------------
 
