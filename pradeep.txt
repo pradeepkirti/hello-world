@@ -841,3 +841,11 @@ ELSE @Prompt('Ending Month','A','Month Year':'MONTH',Mono,Free,Persistent,{'Prio
 
 
 CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN CURRENT_DATE - 1 DAYS ELSE DATE(@Prompt(dtRunDate)) - 1 DAYS END
+
+
+CASE 
+    WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' 
+    THEN CURRENT_DATE - 1 DAYS 
+    ELSE DATE(@Prompt(dtRunDate)) - 1 DAYS 
+END
+
