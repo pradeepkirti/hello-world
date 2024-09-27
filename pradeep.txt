@@ -849,3 +849,4 @@ CASE
     ELSE DATE(@Prompt(dtRunDate)) - 1 DAYS 
 END
 
+totext({ODS.Pay History Previous Current Month\Pay History RC Payment History Date},'yyyy-MM-dd')
