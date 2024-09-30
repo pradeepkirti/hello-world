@@ -862,3 +862,7 @@ case
 end
 
 Rank([Number of Payments];[Payee];[Industry])
+
+
+rank([Number of Payments] for [Payee] within [Industry])
+
