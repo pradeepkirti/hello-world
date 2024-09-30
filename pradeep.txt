@@ -866,3 +866,6 @@ Rank([Number of Payments];[Payee];[Industry])
 
 rank([Number of Payments] for [Payee] within [Industry])
 
+
+
+CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN DATE_TRUNC('Month',CURRENT_DATE)  ELSE  DATE_TRUNC('Month',@Prompt(dtRunDate)) END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN current_date ELSE  @Prompt(dtRunDate) END  )
