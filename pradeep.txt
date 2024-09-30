@@ -869,3 +869,16 @@ rank([Number of Payments] for [Payee] within [Industry])
 
 
 CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN DATE_TRUNC('Month',CURRENT_DATE)  ELSE  DATE_TRUNC('Month',@Prompt(dtRunDate)) END AND CASE WHEN @Prompt(dtRunDate) = '9999-12-31 00:00:00' THEN current_date ELSE  @Prompt(dtRunDate) END  )
+
+
+
+if ([@Prompt('dtRunDate', 'datetime')] = '9999-12-31 00:00:00') then 
+    _add_days(trunc(current_date, 'MM'), 0)
+else 
+    _add_days(trunc([@Prompt('dtRunDate', 'datetime')], 'MM'), 0)
+
+
+if ([@Prompt('dtRunDate', 'datetime')] = '9999-12-31 00:00:00') then 
+    current_date 
+else 
+    [@Prompt('dtRunDate', 'datetime')]
