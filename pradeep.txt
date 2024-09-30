@@ -861,3 +861,4 @@ case
        (count([Number of Payments]) for [Industry])
 end
 
+Rank([Number of Payments];[Payee];[Industry])
