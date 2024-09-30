@@ -854,3 +854,10 @@ totext({ODS.Pay History Previous Current Month\Pay History RC Payment History Da
 format([ODS.Pay History Previous Current Month].[Pay History RC Payment History Date], 'yyyy-MM-dd')
 
 If([Number of Payments]=0;0;[Number of Payments]/(([Number of Payments] In ([Industry])) In Report))
+
+case 
+  when [Number of Payments] = 0 then 0 
+  else [Number of Payments] / 
+       (count([Number of Payments]) for [Industry])
+end
+
