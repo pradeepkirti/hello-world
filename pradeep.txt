@@ -882,3 +882,18 @@ if ([@Prompt('dtRunDate', 'datetime')] = '9999-12-31 00:00:00') then
     current_date 
 else 
     [@Prompt('dtRunDate', 'datetime')]
+
+
+
+shared numberVar k;
+shared numberVar array mGrowth;
+
+if k < 2 then
+	0
+else(
+	if mGrowth[k-1] = 0 then
+		0
+	else 
+		(({EDW_Client_Connect.Subscriber\Subscriber ID Enrollment Count}-mGrowth[k-1])/mGrowth[k-1])*100;
+
+);
