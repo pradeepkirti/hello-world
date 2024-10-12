@@ -1,0 +1,7 @@
+If you want when select all then come all nither come only Selected value
+
+(('All' in (?p_ClientID?) ) and (1=1))
+ 
+or
+ 
+([Spsr Id] in (?p_ClientID?))
