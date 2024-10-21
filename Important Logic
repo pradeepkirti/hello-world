@@ -49,7 +49,7 @@ _end_of_day (_add_months (cast(?dtRunDate? as date),-1))
 
 end
 ------------------------------------------------------------------------
-
+[Date] between (_first_of_month(_add_months(?dtRunDate?,-1))) and (_last_of_month(_add_months(?dtRunDate?,-1)))
 
 
 
