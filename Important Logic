@@ -1,4 +1,5 @@
 If you want when select all then come all nither come only Selected value
+------------------------------------------------------------------------------
 
 (('All' in (?p_ClientID?) ) and (1=1))
  
@@ -7,6 +8,51 @@ or
 ([Spsr Id] in (?p_ClientID?))
 
 
-
+13 Month Before
+-----------------------
 
 [EDW Client Connect].[Calendar].[Date] between _add_months(current_date,-13) and current_date
+
+
+------------------------------------------------------
+
+(?P_ClientID? in 'All')
+
+OR
+([Union1].[Spsr Id] in ?P_ClientID?)
+---------------------------------------------
+[Date]= (
+case when ?p_Rundate?='9999-12-31' then (current_date)
+else
+cast(?p_Rundate? as date)
+
+end
+
+)
+----------------------------------
+case when ('All' in (?P_ClientID?) ) then (1=1)
+else 
+([Spsr Id] in (?P_ClientID?))
+end
+---------------------------------------
+[Date] between  (
+case when ?dtRunDate?='9999-12-31' then _add_months (current_date,-1)
+else
+_add_months (cast(?dtRunDate? as date),-1)
+
+end
+
+) and  (
+case when ?dtRunDate?='9999-12-31' then _end_of_day (_add_months (current_date,-1))
+else
+_end_of_day (_add_months (cast(?dtRunDate? as date),-1))
+
+end
+------------------------------------------------------------------------
+
+
+
+
+
+
+
