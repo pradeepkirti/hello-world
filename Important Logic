@@ -52,7 +52,31 @@ end
 [Date] between (_first_of_month(_add_months(?dtRunDate?,-1))) and (_last_of_month(_add_months(?dtRunDate?,-1)))
 
 
+--------------------------------------------------------------------------------------------
+((cast([Pay History RC Payment History Date] as date)= (if (?dtRunDate? = 'Dec 31, 9999') then 
+(_add_days(current_date,-1)) else (_add_days(?dtRunDate?, -1)))
 
+
+AND
+
+
+cast([Debit Transaction Timestamp Date] as date)<= (if (?dtRunDate? = 'Dec 31, 9999') then 
+(_add_days(current_date,-1)) else (_add_days(?dtRunDate?, -1))))
+
+
+
+OR
+
+
+
+(cast([Pay History RC Payment History Date] as date)< (if (?dtRunDate? = 'Dec 31, 9999') then 
+(_add_days(current_date,-1)) else (_add_days(?dtRunDate?, -1)))
+
+
+AND
+
+cast([Debit Transaction Timestamp Date] as date)= (if (?dtRunDate? = 'Dec 31, 9999') then 
+(_add_days(current_date,-1)) else (_add_days(?dtRunDate?, -1)))))
 
 
 
